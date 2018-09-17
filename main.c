@@ -1,14 +1,19 @@
 #include "noeud.h"
 
 int main(void){
-	nd test = creer_noeud('a');
-	ajout(&test, 'b');
-	ajout(&test, 'c');
-	nd *recherche = rechercher(&test, 'b');
+	nd test = creer_noeud('p');
+	ajout(&test, 'h');
+	ajout(&test, 'j');
+	ajout(&test, 'i');
+	ajout(&test, 'd');
+	ajout(&test, 'f');
+	ajout(&test, 'e');
+	ajout(&test, 't');
+	nd *recherche = rechercher(&test, 't');
 	//supprimer(test, 'b');
-	printf("valeur b = %c\n", (*recherche)->val);
+	printf("valeur t = %c\n", (*recherche)->val);
 	afficher(test);
-	supprimer(test, 'b');
+	supprimer(test, 'h');
 	afficher(test);
 	detruire(&test);
 	

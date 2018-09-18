@@ -13,7 +13,7 @@ void afficher(nd n)
 	}
 }
 
-void ajout(nd *src, char val)
+void ajout(nd *src, void *val)
 {
 	if ((*src) != NULL)
 	{
@@ -56,7 +56,7 @@ nd noeudMin(nd racine){
 	return NULL;
 }
 
-nd getParent(nd src, char val){
+nd getParent(nd src, void *val){
 	nd curP = src;
 	nd curChild = curP;
 	if (src == NULL){
@@ -92,7 +92,7 @@ nd getParent(nd src, char val){
 	return curP;
 }
 
-void supprimer(nd src, char val)
+void supprimer(nd src, void *val)
 {
 	nd *recherche = rechercher(&src, val);
 	if (recherche != NULL)
@@ -144,7 +144,7 @@ void supprimer(nd src, char val)
 	}
 }
 
-nd creer_noeud(char val)
+nd creer_noeud(void *val)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
 
@@ -156,7 +156,7 @@ nd creer_noeud(char val)
 	return res;
 }
 
-nd *rechercher(nd *racine, char val)
+nd *rechercher(nd *racine, void *val)
 {
 	if ((*racine) == NULL)
 	{

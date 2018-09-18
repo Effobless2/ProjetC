@@ -17,4 +17,4 @@ clean:
 	rm *.o main
 	
 run:
-	./main
+	valgrind ./main

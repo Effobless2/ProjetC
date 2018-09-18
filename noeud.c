@@ -2,7 +2,8 @@
 
 void afficher(nd n)
 {
-	printf("Valeur : %c\n", n->val);
+	char v = (char)(*n).val;
+	printf("Valeur : %c\n", v);
 	if (n->droite != NULL)
 	{
 		afficher(n->droite);
@@ -13,6 +14,19 @@ void afficher(nd n)
 	}
 }
 
+nd creer_noeud(void *val)
+{
+	nd res = (nd)malloc(sizeof(struct noeud));
+	printf("creation %c \n", (char)val);
+
+	res->val = val;
+	res->droite = NULL;
+	res->gauche = NULL;
+	res->occ = 1;
+
+	return res;
+}
+
 void ajout(nd *src, void *val)
 {
 	if ((*src) != NULL)
@@ -20,22 +34,16 @@ void ajout(nd *src, void *val)
 		if ((*src)->val == val)
 		{
 			(*src)->occ++;
-		}
-		else
+		} else if (val < (*src)->val)
 		{
-			if (val < (*src)->val)
-			{
-				printf("Ajout gauche \n");
-				ajout(&(*src)->gauche, val);
-			}
-			else
-			{
-				printf("Ajout droite \n");
-				ajout(&(*src)->droite, val);
-			}
+			printf("Ajout gauche \n");
+			ajout(&(*src)->gauche, val);
+		} else
+		{
+			printf("Ajout droite \n");
+			ajout(&(*src)->droite, val);
 		}
-	}
-	else
+	} else
 	{
 		printf("null \n");
 		(*src) = creer_noeud(val);
@@ -98,9 +106,11 @@ void supprimer(nd src, void *val)
 	if (recherche != NULL)
 	{
 		nd copyRecherche = (*recherche);
+		printf("Copy recherche  = %c\n", (char)(*recherche)->val);
 
 		if ((*recherche)->droite == NULL && (*recherche)->gauche == NULL)
 		{
+			(*recherche) = NULL;
 			printf("feuille\n");
 		}
 		else if ((*recherche)->droite == NULL && (*recherche)->gauche != NULL)
@@ -144,18 +154,6 @@ void supprimer(nd src, void *val)
 	}
 }
 
-nd creer_noeud(void *val)
-{
-	nd res = (nd)malloc(sizeof(struct noeud));
-
-	res->val = val;
-	res->droite = NULL;
-	res->gauche = NULL;
-	res->occ = 1;
-
-	return res;
-}
-
 nd *rechercher(nd *racine, void *val)
 {
 	if ((*racine) == NULL)
@@ -181,7 +179,8 @@ void detruire(nd *rac)
 			detruire(&(*rac)->gauche);
 		if ((*rac)->droite != NULL)
 			detruire(&(*rac)->droite);
+		printf("Free de %c\n", (char)(*rac)->val);
 		free((*rac));
 	}
-	free(rac);
+	//free(rac);
 }

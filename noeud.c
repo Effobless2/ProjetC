@@ -14,7 +14,7 @@ void afficher(nd n)
 	}
 }
 
-nd creer_noeud(void *val)
+nd creer_noeud(char val)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
 	printf("creation %c \n", (char)val);
@@ -27,7 +27,7 @@ nd creer_noeud(void *val)
 	return res;
 }
 
-void ajout(nd *src, void *val)
+void ajout(nd *src, char val)
 {
 	if ((*src) != NULL)
 	{
@@ -64,7 +64,7 @@ nd noeudMin(nd racine){
 	return NULL;
 }
 
-nd getParent(nd src, void *val){
+nd getParent(nd src, char val){
 	nd curP = src;
 	nd curChild = curP;
 	if (src == NULL){
@@ -100,7 +100,7 @@ nd getParent(nd src, void *val){
 	return curP;
 }
 
-void supprimer(nd src, void *val)
+void supprimer(nd src, char val)
 {
 	nd *recherche = rechercher(&src, val);
 	if (recherche != NULL)
@@ -154,7 +154,7 @@ void supprimer(nd src, void *val)
 	}
 }
 
-nd *rechercher(nd *racine, void *val)
+nd *rechercher(nd *racine, char val)
 {
 	if ((*racine) == NULL)
 	{

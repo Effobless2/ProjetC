@@ -4,7 +4,7 @@
 typedef struct noeud* nd;
 
 typedef struct noeud{
-	void *val;
+	char val;
 	int occ;
 	nd gauche;
 	nd droite;

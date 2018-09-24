@@ -106,7 +106,7 @@ void supprimer(nd src, char val)
 	if (recherche != NULL)
 	{
 		nd copyRecherche = (*recherche);
-		printf("Copy recherche  = %c\n", (char)(*recherche)->val);
+		printf("Copy recherche  = %c\n", (*recherche)->val);
 
 		if ((*recherche)->droite == NULL && (*recherche)->gauche == NULL)
 		{
@@ -179,7 +179,7 @@ void detruire(nd *rac)
 			detruire(&(*rac)->gauche);
 		if ((*rac)->droite != NULL)
 			detruire(&(*rac)->droite);
-		printf("Free de %c\n", (char)(*rac)->val);
+		printf("Free de %c\n", (*rac)->val);
 		free((*rac));
 	}
 	//free(rac);

@@ -12,7 +12,7 @@ int main(void){
 	ajout(&test, 'e');
 	ajout(&test, 't');
 	nd *recherche = rechercher(&test, 't');
-	printf("valeur t = %c\n", (char)(*recherche)->val);
+	printf("valeur t = %c\n", (*recherche)->val);
 	afficher(test);
 	supprimer(test, 'h');
 	afficher(test);

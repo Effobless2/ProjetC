@@ -3,7 +3,12 @@
 void afficher(nd n)
 {
 	char v = (char)(*n).val;
-	printf("Valeur : %c\n", v);
+	if (v == NULL){
+		printf("Somme : %d\n", n->occ);
+	}
+	else{
+		printf("Valeur : %c\n", v);
+	}
 	if (n->droite != NULL)
 	{
 		afficher(n->droite);
@@ -14,7 +19,7 @@ void afficher(nd n)
 	}
 }
 
-nd creer_noeud(char val)
+nd creer_noeud(char val, int occ)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
 	printf("creation %c \n", (char)val);
@@ -22,7 +27,7 @@ nd creer_noeud(char val)
 	res->val = val;
 	res->droite = NULL;
 	res->gauche = NULL;
-	res->occ = 1;
+	res->occ = occ;
 
 	return res;
 }
@@ -46,7 +51,7 @@ void ajout(nd *src, char val)
 	} else
 	{
 		printf("null \n");
-		(*src) = creer_noeud(val);
+		(*src) = creer_noeud(val, 1);
 	}
 }
 
@@ -183,4 +188,18 @@ void detruire(nd *rac)
 		free((*rac));
 	}
 	//free(rac);
+}
+
+nd fusion(nd n1, nd n2){
+	nd res = creer_noeud(NULL, n1->occ + n2->occ);
+	if (n1->occ > n2->occ){
+		res->droite = n1;
+		res->gauche = n2;
+	}
+	else{
+		res->droite = n2;
+		res->gauche = n1;
+	}
+
+	return res;
 }

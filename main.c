@@ -1,6 +1,8 @@
 #include "liste_nd.h"
 
 int main(void){
+	
+	/*
 	nd test = creer_noeud('p', 1);
 	//printf("Size of test %d\n", sizeof(nd));
 	//printf("Size of *test %d\n", sizeof(struct noeud));
@@ -37,5 +39,11 @@ int main(void){
 	destroyList(testList);
 	
 	detruire(&res);
+
+	*/
+	//test avec noeud de liste
+	nd TreeTest = stringEncoding("chaval");
+	afficher(TreeTest);
+	detruire(&TreeTest);
 	return EXIT_SUCCESS;
 }

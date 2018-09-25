@@ -2,20 +2,20 @@
 
 void afficher(nd n)
 {
-	char v = (char)(*n).val;
-	if (v == NULL){
+	
+	if (n->val == NULL){
 		printf("Somme : %d\n", n->occ);
 	}
 	else{
-		printf("Valeur : %c\n", v);
-	}
-	if (n->droite != NULL)
-	{
-		afficher(n->droite);
+		printf("Valeur : %c pour somme : %d\n", n->val, (*n).occ);
 	}
 	if (n->gauche != NULL)
 	{
 		afficher(n->gauche);
+	}
+	if (n->droite != NULL)
+	{
+		afficher(n->droite);
 	}
 }
 
@@ -202,4 +202,16 @@ nd fusion(nd n1, nd n2){
 	}
 
 	return res;
+}
+
+int nodeComparision(nd n1, nd n2){
+	if (n1->occ > n2->occ)
+		return 1;
+	if (n2->occ > n1->occ)
+		return -1;
+	if (n2->val == NULL || n1->val > n2->val)
+		return -1;
+	if (n1->val == NULL || n2->val > n1->val)
+		return 1;
+	return 0;
 }

@@ -1,8 +1,9 @@
-#include "noeud.h"
-#include "liste.h"
+#include "utils.h"
+
 
 int main(void){
-	nd test = creer_noeud('p');
+	/*
+	nd test = creer_noeud('p', 1);
 	ajout(&test, 'h');
 	ajout(&test, 'j');
 	ajout(&test, 'i');
@@ -15,8 +16,15 @@ int main(void){
 	afficher(test);
 	supprimer(test, 'h');
 	afficher(test);
-	detruire(&test);*
-	
+	detruire(&test);
+	*/
+
+	char str[10] = "chaval";
+	nd *liste = liste_huffman(str);
+
+	for(int i=0; liste[i] != NULL; i++){
+		afficher(liste[i]);
+	}
 	
 	return EXIT_SUCCESS;
 }

@@ -3,7 +3,8 @@
 void afficher(nd n)
 {
 	char v = (char)(*n).val;
-	printf("Valeur : %c\n", v);
+	int occ = (int)(*n).occ;
+	printf("Valeur : %c | Fréquence : %d\n", v, occ);
 	if (n->droite != NULL)
 	{
 		afficher(n->droite);
@@ -14,7 +15,7 @@ void afficher(nd n)
 	}
 }
 
-nd creer_noeud(char val)
+nd creer_noeud(char val, int occ)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
 	printf("creation %c \n", (char)val);
@@ -22,7 +23,7 @@ nd creer_noeud(char val)
 	res->val = val;
 	res->droite = NULL;
 	res->gauche = NULL;
-	res->occ = 1;
+	res->occ = occ;
 
 	return res;
 }
@@ -46,7 +47,7 @@ void ajout(nd *src, char val)
 	} else
 	{
 		printf("null \n");
-		(*src) = creer_noeud(val);
+		(*src) = creer_noeud(val, 1);
 	}
 }
 

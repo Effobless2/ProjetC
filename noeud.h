@@ -12,7 +12,7 @@ typedef struct noeud{
 
 void ajout(nd *src, char val);
 void supprimer(nd src, char val);
-nd creer_noeud(char val);
+nd creer_noeud(char val, int occ);
 nd *rechercher(nd *racine, char val);
 void detruire(nd* src);
 void afficher(nd n);

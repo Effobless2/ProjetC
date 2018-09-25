@@ -45,3 +45,16 @@ nd* liste_huffman(char *str){
 	return rt;
 
 }
+
+void afficher_liste_huffman(nd *liste){
+	for(int i=0; liste[i] != NULL; i++){
+		afficher(liste[i]);
+	}
+}
+
+void detruire_liste_huffman(nd *liste){
+	for(int i=0; liste[i] != NULL; i++){
+		detruire(&liste[i]);
+	}
+	free(liste);
+}

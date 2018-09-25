@@ -15,7 +15,7 @@ char* supprimer_duplication(char *str, int taille){
 	}
 
 	rt[indice+1] = '\0'; // On marque la fin de la chaîne à retourner
-
+	free(utiliser);
 	return rt;
 }
 
@@ -38,6 +38,9 @@ nd* liste_huffman(char *str){
 
 		rt[i] = creer_noeud( str_unique[i], frequences[i] ); // Création d'un arbre minimaliste avec le symbole et sa fréquence associée dans le tableau à retourner
 	}
+
+	free(str_unique);
+	free(frequences);
 
 	return rt;
 

@@ -1,4 +1,4 @@
-#include "noeud.h"
+#include "liste_nd.h"
 
 int main(void){
 	nd test = creer_noeud('p', 1);
@@ -25,9 +25,17 @@ int main(void){
 	nd res = fusion(t1, t2);
 
 	afficher(res);
-	detruire(&res);
 
+	lt testList = create(creer_noeud('a', 1));
+	addToList(testList, 'b');
+	addToList(testList, 'c');
+	addToList(testList, 'a');
+	addToList(testList, 'c');
+
+	afficherList(testList);
+
+	destroyList(testList);
 	
-	
+	detruire(&res);
 	return EXIT_SUCCESS;
 }

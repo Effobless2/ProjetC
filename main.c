@@ -1,9 +1,8 @@
 #include "noeud.h"
+#include "liste.h"
 
 int main(void){
 	nd test = creer_noeud('p');
-	//printf("Size of test %d\n", sizeof(nd));
-	//printf("Size of *test %d\n", sizeof(struct noeud));
 	ajout(&test, 'h');
 	ajout(&test, 'j');
 	ajout(&test, 'i');
@@ -16,8 +15,7 @@ int main(void){
 	afficher(test);
 	supprimer(test, 'h');
 	afficher(test);
-	detruire(&test);
-
+	detruire(&test);*
 	
 	
 	return EXIT_SUCCESS;

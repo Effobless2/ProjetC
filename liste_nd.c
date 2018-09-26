@@ -43,7 +43,7 @@ void destroyList(lt list){
 }
 
 void afficherList(lt list){
-    printf("Valeur : %c, Occurence : %d\n", list->val->val, list->val->occ);
+    //printf("Valeur : %c, Occurence : %d\n", list->val->val, list->val->occ);
     if (list->next != NULL){
         afficherList(list->next);
     }
@@ -51,7 +51,7 @@ void afficherList(lt list){
 
 /*
 void fuse(lt **node1, lt **node2){
-    printf("&node2 : %p, node2 : %p, (*node2) : %p\n", &node2, node2, (*node2));
+    //printf("&node2 : %p, node2 : %p, (*node2) : %p\n", &node2, node2, (*node2));
     nd fusion = creer_noeud(NULL, (**node1)->val->occ + (**node2)->val->occ);
     fusion->gauche = (**node2)->val;
     fusion->droite = (**node1)->val;
@@ -67,43 +67,50 @@ nd stringEncoding(char *text){
     for (int i = 1; i < strlen(text); i++){
         addToList(list, text[i]);
     }
-    afficherList(list);
-    printf("list : %p\n",&list);
+    //afficherList(list);
+    //printf("list : %p\n",&list);
     while(list->next != NULL){
         lt *curList = &list;
         // &list == curList
-        printf("curlist : %p\n",curList);
+        //printf("curlist : %p\n",curList);
            
         lt *curNode1 = NULL; 
         lt *curNode2 = NULL; //smaller of two Nodes
         while((*curList) != NULL){
-            if (curNode1 == NULL){
-                curNode1 = curList;
-            }
-            else if (curNode2 == NULL){
-                if(nodeComparision((*curNode1)->val, (*curList)->val) < 0){
-                    curNode2 = curNode1;
-                    curNode1 = curList;
-                }
-                else{
-                    curNode2 = curList;
-                }
-            }
-            else if (nodeComparision((*curNode2)->val, (*curList)->val) > 0){
+            if (curNode2 == NULL){
                 curNode2 = curList;
             }
-            else if (nodeComparision((*curNode1)->val, (*curList)->val) > 0){
-                curNode1 = curList;
+            else if (curNode1 == NULL){
+                if(nodeComparision((*curNode2)->val, (*curList)->val) > 0){
+                    curNode1 = curNode2;
+                    curNode2 = curList;
+                }
+                else{
+                    curNode1 = curList;
+                }
             }
+            else if (nodeComparision((*curNode1)->val, (*curList)->val) > 0){
+                if (nodeComparision((*curNode2)->val, (*curList)->val) > 0){
+                    curNode1 = curNode2;
+                    curNode2 = curList;
+                }
+                else{
+                    curNode1 = curList;
+                }
+            }/*
+            else if (nodeComparision((*curNode2)->val, (*curList)->val) > 0){
+                curNode1 = curNode2;
+                curNode2 = curList;
+            }*/
             curList = &((*curList)->next);
         }
-        afficherList((*curNode1));
-        afficherList((*curNode2));
+        //afficherList((*curNode1));
+        //afficherList((*curNode2));
 
         nd fusion = creer_noeud(NULL, (*curNode1)->val->occ + (*curNode2)->val->occ);
         fusion->gauche = (*curNode2)->val;
         fusion->droite = (*curNode1)->val;
-        afficher(fusion);
+        //afficher(fusion);
 
         (*curNode1)->val = fusion;
         lt temp = (*curNode2);
@@ -116,11 +123,11 @@ nd stringEncoding(char *text){
         afficherList(list);*/
     }
     
-    afficherList((list));
+    //afficherList((list));
     nd res = &((*list->val));
-    printf("\n");
-    afficher(res);
-    printf("\n");
+    //printf("\n");
+    //afficher(res);
+    //printf("\n");
     destroyList(list);
 
     return res;

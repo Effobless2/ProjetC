@@ -1,4 +1,5 @@
 #include "liste_nd.h"
+#include <time.h>
 
 int main(void){
 	
@@ -42,7 +43,13 @@ int main(void){
 
 	*/
 	//test avec noeud de liste
+	
+	clock_t begin = clock();
 	nd TreeTest = stringEncoding("chaval");
+	clock_t end = clock();
+
+	double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
+	printf("----------\nExe : %f\n----------\n", time_spent);
 	afficher(TreeTest);
 	detruire(&TreeTest);
 	return EXIT_SUCCESS;

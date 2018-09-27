@@ -2,16 +2,29 @@
 
 void afficher(nd n)
 {
+<<<<<<< HEAD
 	char v = (char)(*n).val;
 	int occ = (int)(*n).occ;
 	printf("Valeur : %c | Fréquence : %d\n", v, occ);
 	if (n->droite != NULL)
 	{
 		afficher(n->droite);
+=======
+	
+	if (n->val == NULL){
+		printf("Somme : %d\n", n->occ);
+	}
+	else{
+		printf("Valeur : %c pour somme : %d\n", n->val, (*n).occ);
+>>>>>>> binome/master
 	}
 	if (n->gauche != NULL)
 	{
 		afficher(n->gauche);
+	}
+	if (n->droite != NULL)
+	{
+		afficher(n->droite);
 	}
 }
 
@@ -106,7 +119,7 @@ void supprimer(nd src, char val)
 	if (recherche != NULL)
 	{
 		nd copyRecherche = (*recherche);
-		printf("Copy recherche  = %c\n", (char)(*recherche)->val);
+		printf("Copy recherche  = %c\n", (*recherche)->val);
 
 		if ((*recherche)->droite == NULL && (*recherche)->gauche == NULL)
 		{
@@ -182,6 +195,21 @@ void detruire(nd *rac)
 		free((*rac));
 	}
 	//free(rac);
+}
+
+
+nd fusion(nd n1, nd n2){
+	nd res = creer_noeud(NULL, n1->occ + n2->occ);
+	if (n1->occ > n2->occ){
+		res->droite = n1;
+		res->gauche = n2;
+	}
+	else{
+		res->droite = n2;
+		res->gauche = n1;
+	}
+
+	return res;
 }
 
 int nodeComparision(nd n1, nd n2){

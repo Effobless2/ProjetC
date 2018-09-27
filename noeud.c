@@ -3,7 +3,7 @@
 void afficher(nd n){
 	char v = (char)(*n).val;
 	int occ = (int)(*n).occ;
-	printf("Valeur : %c | Fréquence : %d\n", v, occ);
+	printf("(%c , %d)\n", v, occ);
 	if (n->gauche != NULL)
 	{
 		afficher(n->gauche);
@@ -169,6 +169,50 @@ nd *rechercher(nd *racine, char val)
 	}
 	return (*racine)->gauche == NULL ? NULL : rechercher(&(*racine)->gauche, val);
 }
+
+
+char* recherchePrefixe(nd src, char val){
+	if( (*src).val == NULL ){
+		puts("Entrer dans le if null");
+		if( (*src).gauche != NULL ){
+			puts("Entrer dans le gauche");
+			char *rc = recherchePrefixe( (*src).gauche, val );
+			printf("Taille rc = %d\n", strlen(rc));
+			printf("%s\n", rc);
+
+			if( rc != NULL){
+				puts("rc pas null");
+				char *temp[strlen(rc)+1];
+				printf("Taille temp = %d\n", strlen(temp));
+				temp[0] = "0";
+				//strcat(temp, rc);
+				printf("%s\n", temp);
+				return temp;
+			}
+		}
+
+		if( (*src).droite != NULL ){
+			puts("Entrer dans le droite");
+			char *temp = "1";
+			char *rc = recherchePrefixe( (*src).droite, val );
+			
+			if( rc != NULL){
+				strcat(temp, rc);
+				return temp;
+			}
+		}
+
+	}else if( (*src).val == val){
+		puts("if val == ");
+		return "";
+	}
+
+	return NULL;
+}
+
+
+
+
 
 void detruire(nd *rac)
 {

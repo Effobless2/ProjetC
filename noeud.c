@@ -173,17 +173,17 @@ nd *rechercher(nd *racine, char val)
 
 char* recherchePrefixe(nd src, char val){
 	if( (*src).val == NULL ){
-		puts("Entrer dans le if null");
+		//puts("Entrer dans le if null");
 		if( (*src).gauche != NULL ){
-			puts("Entrer dans le gauche");
+			//puts("Entrer dans le gauche");
 			char *rc = recherchePrefixe( (*src).gauche, val );
 			//printf("%s\n", rc);
 
 			if( rc != NULL){
-				puts("rc pas null");
-				printf("Taille rc = %d\n", sizeof(rc));
+				//puts("rc pas null");
+				//printf("Taille rc = %d\n", sizeof(rc));
 				char *temp = malloc(sizeof(rc)+ sizeof(char));
-				printf("Taille temp = %d\n", sizeof(temp));
+				//printf("Taille temp = %d\n", sizeof(temp));
 				temp[0] = '0';
 				int i;
 				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
@@ -194,20 +194,20 @@ char* recherchePrefixe(nd src, char val){
 				if (strlen(rc) != 0){
 					free(rc);
 				}
-				printf("%s\n", temp);
+				//printf("%s\n", temp);
 				return temp;
 			}
 		}
 
 		if( (*src).droite != NULL ){
-			puts("Entrer dans le droite");
+			//puts("Entrer dans le droite");
 			char *rc = recherchePrefixe( (*src).droite, val );
 			
 			if( rc != NULL){
-				puts("rc pas null");
-				printf("Taille rc = %d\n", sizeof(rc));
+				//puts("rc pas null");
+				//printf("Taille rc = %d\n", sizeof(rc));
 				char *temp = malloc(sizeof(rc)+ sizeof(char));
-				printf("Taille temp = %d\n", sizeof(temp));
+				//printf("Taille temp = %d\n", sizeof(temp));
 				temp[0] = '1';
 				int i;
 				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
@@ -218,13 +218,13 @@ char* recherchePrefixe(nd src, char val){
 				if (strlen(rc) != 0){
 					free(rc);
 				}
-				printf("%s\n", temp);
+				//printf("%s\n", temp);
 				return temp;
 			}
 		}
 
 	}else if( (*src).val == val){
-		puts("if val == ");
+		//puts("if val == ");
 		return "";
 	}
 
@@ -232,7 +232,24 @@ char* recherchePrefixe(nd src, char val){
 }
 
 
+char* compression(nd src, char *str){
+	int i=0;
+	char *rt = malloc(sizeof(char)* 100);
+	rt[0] = '\0';
+	char *temp;
+	while(i < strlen(str)){
+		//printf("while i = %d\n", i);
+		temp = recherchePrefixe(src, str[i]);
+		//printf("Temp : %s\n", temp);
+		//puts("apres recherche");
+		strcat(rt, temp);
+		//printf("Temp : %s\n", rt);
+		i++;
+		free(temp);
+	}
 
+	return rt;
+}
 
 
 void detruire(nd *rac)

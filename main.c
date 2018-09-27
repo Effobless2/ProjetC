@@ -55,6 +55,10 @@ int main(void){
 	printf("Recherche de h : %s\n", testToto);
 	free(testToto);
 
+	char* compr = compression(TreeTest, "chaval");
+	printf("%s\n", compr);
+
+	free(compr);
 	detruire(&TreeTest);
 	return EXIT_SUCCESS;
 }

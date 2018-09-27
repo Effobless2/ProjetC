@@ -44,18 +44,19 @@ int main(void){
 	*/
 	//test avec noeud de liste
 	
+	char *str = "J'adore l'informatique et j'adore manger";
 	clock_t begin = clock();
-	nd TreeTest = stringEncoding("chaval");
+	nd TreeTest = stringEncoding(str);
 	clock_t end = clock();
 
 	double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
 	printf("----------\nExe : %f\n----------\n", time_spent);
 	afficher(TreeTest);
-	char *testToto = recherchePrefixe(TreeTest, 'h');
+	char *testToto = recherchePrefixe(TreeTest, 'i');
 	printf("Recherche de h : %s\n", testToto);
 	free(testToto);
 
-	char* compr = compression(TreeTest, "chaval");
+	char* compr = compression(TreeTest, str);
 	printf("%s\n", compr);
 
 	free(compr);

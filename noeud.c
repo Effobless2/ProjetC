@@ -234,7 +234,7 @@ char* recherchePrefixe(nd src, char val){
 
 char* compression(nd src, char *str){
 	int i=0;
-	char *rt = malloc(sizeof(char)* 100);
+	char *rt = malloc(sizeof(char));
 	rt[0] = '\0';
 	char *temp;
 	while(i < strlen(str)){
@@ -242,12 +242,14 @@ char* compression(nd src, char *str){
 		temp = recherchePrefixe(src, str[i]);
 		//printf("Temp : %s\n", temp);
 		//puts("apres recherche");
+		rt = realloc( rt, sizeof(char) * (strlen(rt) + strlen(temp)) + 1 );
 		strcat(rt, temp);
 		//printf("Temp : %s\n", rt);
 		i++;
 		free(temp);
 	}
 
+	printf("taille = %d | %d\n", strlen(rt), strlen(rt)*sizeof(char));
 	return rt;
 }
 

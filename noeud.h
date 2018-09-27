@@ -16,3 +16,4 @@ nd creer_noeud(char val, int occ);
 nd *rechercher(nd *racine, char val);
 void detruire(nd* src);
 void afficher(nd n);
+int nodeComparision(nd n1, nd n2);

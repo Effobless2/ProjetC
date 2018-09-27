@@ -18,7 +18,6 @@ void afficher(nd n)
 nd creer_noeud(char val, int occ)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
-	printf("creation %c \n", (char)val);
 
 	res->val = val;
 	res->droite = NULL;
@@ -180,8 +179,23 @@ void detruire(nd *rac)
 			detruire(&(*rac)->gauche);
 		if ((*rac)->droite != NULL)
 			detruire(&(*rac)->droite);
-		printf("Free de %c\n", (char)(*rac)->val);
 		free((*rac));
 	}
 	//free(rac);
+}
+
+int nodeComparision(nd n1, nd n2){
+	if (n1->occ > n2->occ)
+		return 1;
+	if (n2->occ > n1->occ)
+		return -1;
+	if(n1->val == NULL)
+		return nodeComparision(n1->droite, n2);
+	if (n2->val == NULL)
+		return nodeComparision(n1, n2->gauche);
+	if (n1->val > n2->val)
+		return 1;
+	if (n2->val > n1->val)
+		return -1;
+	return 0;
 }

@@ -52,9 +52,37 @@ void afficher_liste_huffman(nd *liste){
 	}
 }
 
+int recherchePlusPetit(nd *liste){
+
+	int taille=0;
+	while(liste[taille] != NULL){
+		taille++;
+	}
+
+	int petit = 0;
+	while(liste[petit] == -1){ // On cherche le premier noeud non utilisé
+		petit++;
+	}
+
+	for(int i=0; i<taille; i++){
+		if( nodeComparision( liste[i], liste[petit] ) == -1 ) // noeud de i < noeud de petit
+			petit = i;
+	}
+
+	return petit;
+}
+
+//TODO : fonctionne pas, erreur segmentation
 void detruire_liste_huffman(nd *liste){
 	for(int i=0; liste[i] != NULL; i++){
 		detruire(&liste[i]);
 	}
 	free(liste);
+}
+
+nd huffman(nd *liste){
+	// Lorsqu'un noeud de liste est déjà utilisé, on met son occ à -1
+	// On cherche le premier plus petit différent de -1
+	// On cherche le deuxième plus petit différent du premier
+	return NULL;
 }

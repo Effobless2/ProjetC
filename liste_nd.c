@@ -107,7 +107,7 @@ nd stringEncoding(char *text){
         //afficherList((*curNode1));
         //afficherList((*curNode2));
 
-        nd fusion = creer_noeud(NULL, (*curNode1)->val->occ + (*curNode2)->val->occ);
+        nd fusion = creer_noeud(NULL, (int)((*curNode1)->val->occ) + (int)((*curNode2)->val->occ));
         fusion->gauche = (*curNode2)->val;
         fusion->droite = (*curNode1)->val;
         //afficher(fusion);

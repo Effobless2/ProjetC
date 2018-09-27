@@ -14,7 +14,7 @@ void afficher(nd n){
 	}
 }
 
-nd creer_noeud(char val, int occ)
+nd creer_noeud(char val, void *occ)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
 
@@ -26,26 +26,26 @@ nd creer_noeud(char val, int occ)
 	return res;
 }
 
-void ajout(nd *src, char val)
+void ajout(nd *src, char val, void *occ)
 {
 	if ((*src) != NULL)
 	{
 		if ((*src)->val == val)
 		{
-			(*src)->occ++;
+			return;
 		} else if (val < (*src)->val)
 		{
 			printf("Ajout gauche \n");
-			ajout(&(*src)->gauche, val);
+			ajout(&(*src)->gauche, val, occ);
 		} else
 		{
 			printf("Ajout droite \n");
-			ajout(&(*src)->droite, val);
+			ajout(&(*src)->droite, val, occ);
 		}
 	} else
 	{
 		printf("null \n");
-		(*src) = creer_noeud(val, 1);
+		(*src) = creer_noeud(val, occ);
 	}
 }
 
@@ -221,27 +221,33 @@ char* recherchePrefixe(nd src, char val){
 
 
 char* compression(nd src, char *str){
-	int i=0;
-	char letters[26] = "";
-	char *prefixes[26];
+	char **lprefixes[30];
+	nd prefixes = NULL;
+	int nbletters = 0;
 
 	char *rt = malloc(sizeof(char));
 	rt[0] = '\0';
 	char *temp;
+	int i = 0;
 	while(i < strlen(str)){
 		temp = NULL;
-		//printf("while i = %d\n", i);
-		int j;
-		for (j = 0; j < strlen(letters); j++){
-			if (letters[j] == str[i]){
-				temp = prefixes[j];
-				break;
-			}
+
+		if (prefixes == NULL){
+			temp = recherchePrefixe(src, str[i]);
+			prefixes = creer_noeud(str[i], temp);
+			lprefixes[0] = temp;
+			nbletters++;
 		}
+		else{
+			nd *cur = rechercher(&prefixes, str[i]);
+			temp = cur == NULL ? NULL : (char *)((*cur)->occ);
+		}
+
 		if (temp == NULL){
 			temp = recherchePrefixe(src, str[i]);
-			letters[j] = str[i];
-			prefixes[j] = temp;
+			ajout(&prefixes, str[i], temp);
+			lprefixes[nbletters] = temp;
+			nbletters++;
 		}
 		
 		//printf("Temp : %s\n", temp);
@@ -251,8 +257,9 @@ char* compression(nd src, char *str){
 		//printf("Temp : %s\n", rt);
 		i++;
 	}
-	for (int i = 0; i < strlen(letters); i++){
-		free(prefixes[i]);
+	detruire(&prefixes);
+	for (int i = 0; i < nbletters; i++){
+		free(lprefixes[i]);
 	}
 
 	printf("taille = %d | %d\n", strlen(rt), strlen(rt)*sizeof(char));
@@ -304,7 +311,7 @@ void detruire(nd *rac)
 
 
 nd fusion(nd n1, nd n2){
-	nd res = creer_noeud(NULL, n1->occ + n2->occ);
+	nd res = creer_noeud(NULL, (int)n1->occ + (int)n2->occ);
 	if (n1->occ > n2->occ){
 		res->droite = n1;
 		res->gauche = n2;

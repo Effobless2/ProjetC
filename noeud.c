@@ -173,57 +173,45 @@ nd *rechercher(nd *racine, char val)
 
 char* recherchePrefixe(nd src, char val){
 	if( (*src).val == NULL ){
+		char prefixe;
+		nd noeud;
+		char *rc = NULL;
 		//puts("Entrer dans le if null");
 		if( (*src).gauche != NULL ){
+			noeud = (*src).gauche;
+			prefixe = '0';
 			//puts("Entrer dans le gauche");
-			char *rc = recherchePrefixe( (*src).gauche, val );
+			rc = recherchePrefixe( noeud, val );
 			//printf("%s\n", rc);
-
-			if( rc != NULL){
-				//puts("rc pas null");
-				//printf("Taille rc = %d\n", sizeof(rc));
-				char *temp = malloc(sizeof(rc)+ sizeof(char));
-				//printf("Taille temp = %d\n", sizeof(temp));
-				temp[0] = '0';
-				int i;
-				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
-					temp[i+1] = rc[i];
-				}
-				temp[i] = '\o';
-				//strcat(temp, rc);
-				if (strlen(rc) != 0){
-					free(rc);
-				}
-				//printf("%s\n", temp);
-				return temp;
-			}
 		}
 
-		if( (*src).droite != NULL ){
+		if(rc == NULL && (*src).droite != NULL ){
+			noeud = (*src).droite;
+			prefixe = '1';
 			//puts("Entrer dans le droite");
-			char *rc = recherchePrefixe( (*src).droite, val );
-			
-			if( rc != NULL){
-				//puts("rc pas null");
-				//printf("Taille rc = %d\n", sizeof(rc));
-				char *temp = malloc(sizeof(rc)+ sizeof(char));
-				//printf("Taille temp = %d\n", sizeof(temp));
-				temp[0] = '1';
-				int i;
-				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
-					temp[i+1] = rc[i];
-				}
-				temp[i] = '\o';
-				//strcat(temp, rc);
-				if (strlen(rc) != 0){
-					free(rc);
-				}
-				//printf("%s\n", temp);
-				return temp;
+			rc = recherchePrefixe( noeud, val );
+		}
+		
+		if (rc != NULL){
+			//puts("rc pas null");
+			//printf("Taille rc = %d\n", sizeof(rc));
+			char *temp = malloc(sizeof(rc)+ sizeof(char));
+			//printf("Taille temp = %d\n", sizeof(temp));
+			temp[0] = prefixe;
+			int i;
+			for (i = 0; i < sizeof(rc)/sizeof(char); i++){
+				temp[i+1] = rc[i];
 			}
+			temp[i] = '\o';
+			//strcat(temp, rc);
+			if (strlen(rc) != 0){
+				free(rc);
+			}
+			//printf("%s\n", temp);
+			return temp;
 		}
 
-	}else if( (*src).val == val){
+	} else if( (*src).val == val){
 		//puts("if val == ");
 		return "";
 	}

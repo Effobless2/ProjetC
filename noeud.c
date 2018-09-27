@@ -1,23 +1,9 @@
 #include "noeud.h"
 
-void afficher(nd n)
-{
-<<<<<<< HEAD
+void afficher(nd n){
 	char v = (char)(*n).val;
 	int occ = (int)(*n).occ;
 	printf("Valeur : %c | Fréquence : %d\n", v, occ);
-	if (n->droite != NULL)
-	{
-		afficher(n->droite);
-=======
-	
-	if (n->val == NULL){
-		printf("Somme : %d\n", n->occ);
-	}
-	else{
-		printf("Valeur : %c pour somme : %d\n", n->val, (*n).occ);
->>>>>>> binome/master
-	}
 	if (n->gauche != NULL)
 	{
 		afficher(n->gauche);

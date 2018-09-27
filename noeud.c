@@ -222,19 +222,37 @@ char* recherchePrefixe(nd src, char val){
 
 char* compression(nd src, char *str){
 	int i=0;
+	char letters[26] = "";
+	char *prefixes[26];
+
 	char *rt = malloc(sizeof(char));
 	rt[0] = '\0';
 	char *temp;
 	while(i < strlen(str)){
+		temp = NULL;
 		//printf("while i = %d\n", i);
-		temp = recherchePrefixe(src, str[i]);
+		int j;
+		for (j = 0; j < strlen(letters); j++){
+			if (letters[j] == str[i]){
+				temp = prefixes[j];
+				break;
+			}
+		}
+		if (temp == NULL){
+			temp = recherchePrefixe(src, str[i]);
+			letters[j] = str[i];
+			prefixes[j] = temp;
+		}
+		
 		//printf("Temp : %s\n", temp);
 		//puts("apres recherche");
 		rt = realloc( rt, sizeof(char) * (strlen(rt) + strlen(temp)) + 1 );
 		strcat(rt, temp);
 		//printf("Temp : %s\n", rt);
 		i++;
-		free(temp);
+	}
+	for (int i = 0; i < strlen(letters); i++){
+		free(prefixes[i]);
 	}
 
 	printf("taille = %d | %d\n", strlen(rt), strlen(rt)*sizeof(char));

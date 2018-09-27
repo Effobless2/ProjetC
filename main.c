@@ -44,7 +44,7 @@ int main(void){
 	*/
 	//test avec noeud de liste
 	
-	char *str = "J'adore l'informatique et j'adore manger";
+	char *str = "J'adore l'informatiche";
 	clock_t begin = clock();
 	nd TreeTest = stringEncoding(str);
 	clock_t end = clock();
@@ -52,13 +52,17 @@ int main(void){
 	double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
 	printf("----------\nExe : %f\n----------\n", time_spent);
 	afficher(TreeTest);
-	char *testToto = recherchePrefixe(TreeTest, 'i');
+	char *testToto = recherchePrefixe(TreeTest, 'h');
 	printf("Recherche de h : %s\n", testToto);
 	free(testToto);
 
 	char* compr = compression(TreeTest, str);
 	printf("%s\n", compr);
 
+	char* decompr = decompression(TreeTest, compr);
+	printf("%s\n", decompr);
+
+	free(decompr);
 	free(compr);
 	detruire(&TreeTest);
 	return EXIT_SUCCESS;

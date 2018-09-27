@@ -253,6 +253,35 @@ char* compression(nd src, char *str){
 	return rt;
 }
 
+char* decompression(nd src, char *str){
+	
+	int i = 0;
+	char *rt = malloc(sizeof(char));
+	nd temp = src;
+	rt[0] = '\0';
+
+	while( i < strlen(str)+1 ){
+		if( (*temp).val != NULL ){
+			rt = realloc( rt, sizeof(char) * (strlen(rt)) + 2);
+			// printf("Temp val = %c\n", (*temp).val);
+			char valTemp[2];
+			valTemp[0] = (*temp).val;
+			valTemp[1] = '\0';
+			strcat(rt, valTemp);
+			temp = src;
+		}else{
+			if( str[i] == '0' ){
+				temp = (*temp).gauche;
+			}else{
+				temp = (*temp).droite;
+			}
+			i++;
+		}
+
+	}
+
+	return rt;
+}
 
 void detruire(nd *rac)
 {

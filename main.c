@@ -51,9 +51,9 @@ int main(void){
 	double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
 	printf("----------\nExe : %f\n----------\n", time_spent);
 	afficher(TreeTest);
-
-	printf("Recherche de a : %s\n", recherchePrefixe(TreeTest, 'a'));
-
+	char *testToto = recherchePrefixe(TreeTest, 'h');
+	printf("Recherche de h : %s\n", testToto);
+	free(testToto);
 
 	detruire(&TreeTest);
 	return EXIT_SUCCESS;

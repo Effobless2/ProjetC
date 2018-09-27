@@ -177,15 +177,23 @@ char* recherchePrefixe(nd src, char val){
 		if( (*src).gauche != NULL ){
 			puts("Entrer dans le gauche");
 			char *rc = recherchePrefixe( (*src).gauche, val );
-			printf("Taille rc = %d\n", strlen(rc));
-			printf("%s\n", rc);
+			//printf("%s\n", rc);
 
 			if( rc != NULL){
 				puts("rc pas null");
-				char *temp[strlen(rc)+1];
-				printf("Taille temp = %d\n", strlen(temp));
-				temp[0] = "0";
+				printf("Taille rc = %d\n", sizeof(rc));
+				char *temp = malloc(sizeof(rc)+ sizeof(char));
+				printf("Taille temp = %d\n", sizeof(temp));
+				temp[0] = '0';
+				int i;
+				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
+					temp[i+1] = rc[i];
+				}
+				temp[i] = '\o';
 				//strcat(temp, rc);
+				if (strlen(rc) != 0){
+					free(rc);
+				}
 				printf("%s\n", temp);
 				return temp;
 			}
@@ -193,11 +201,24 @@ char* recherchePrefixe(nd src, char val){
 
 		if( (*src).droite != NULL ){
 			puts("Entrer dans le droite");
-			char *temp = "1";
 			char *rc = recherchePrefixe( (*src).droite, val );
 			
 			if( rc != NULL){
-				strcat(temp, rc);
+				puts("rc pas null");
+				printf("Taille rc = %d\n", sizeof(rc));
+				char *temp = malloc(sizeof(rc)+ sizeof(char));
+				printf("Taille temp = %d\n", sizeof(temp));
+				temp[0] = '1';
+				int i;
+				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
+					temp[i+1] = rc[i];
+				}
+				temp[i] = '\o';
+				//strcat(temp, rc);
+				if (strlen(rc) != 0){
+					free(rc);
+				}
+				printf("%s\n", temp);
 				return temp;
 			}
 		}

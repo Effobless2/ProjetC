@@ -257,24 +257,31 @@ void compression_Fichier(char *name){
 	// On lit le fichier et on store les char dans un tableau et on en profite pour compter le nb de symbole
 	FILE *fp;
 	int taille = 0;
-	char* tout;
+	char* texte;
 
 	fp = fopen(name, "r");
-	/* On récupère la taille en allant à la fin du fichier */
+	// On récupère la taille en allant à la fin du fichier 
 	fseek(fp, 0, SEEK_END); // on va a la fin du fichier
 	taille = ftell(fp); // cb de bits on a parcouru
 	rewind(fp); // retour au début
 
-	tout = malloc(taille+1 * sizeof(char));
+	texte = malloc(taille+1 * sizeof(char));
 
-	fread(tout, taille, 1, fp);
-	tout[taille] = '\0';
+	fread(texte, taille, 1, fp);
+	texte[taille] = '\0';
 
 	fclose(fp);
 
-	printf("%s\n",tout);
+	/* ---------- Fin gérer fichier ---------- */
+	nd arbreCompression = stringEncoding(texte);
+	char* compr = compression(arbreCompression, texte);
 
-	free(tout);
+	printf("Texte Original : \n%s\n", texte);
+	printf("Texte compressé : \n%s\n", compr);
+
+	free(texte);
+	free(compr);
+
 
 }
 

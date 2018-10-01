@@ -1,1 +1,1 @@
-Ceci est une phrase de test pour le codage d'Huffman, je vais d'abord la compresser puis la décompresser !
+chaval

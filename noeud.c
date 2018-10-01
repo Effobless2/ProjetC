@@ -273,6 +273,7 @@ void compression_Fichier(char *name){
 	fclose(fp);
 
 	/* ---------- Fin gérer fichier ---------- */
+	printf("Taille = %d\n", strlen(texte));
 	nd arbreCompression = stringEncoding(texte);
 	char* compr = compression(arbreCompression, texte);
 
@@ -281,6 +282,7 @@ void compression_Fichier(char *name){
 
 	free(texte);
 	free(compr);
+	detruire(&arbreCompression);
 
 
 }

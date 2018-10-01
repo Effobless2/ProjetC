@@ -44,17 +44,16 @@ int main(void){
 	*/
 	//test avec noeud de liste
 	
-	char *str = "J'adore l'informatiche";
+	
+
+
+	/*char *str = "J'aimerai manger des bonnes pâtes au curry mais le problème c'est que je dois faire mon codage de Huffman avant !!";
 	clock_t begin = clock();
 	nd TreeTest = stringEncoding(str);
 	clock_t end = clock();
 
 	double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
 	printf("----------\nExe : %f\n----------\n", time_spent);
-	afficher(TreeTest);
-	char *testToto = recherchePrefixe(TreeTest, 'h');
-	printf("Recherche de h : %s\n", testToto);
-	free(testToto);
 
 	char* compr = compression(TreeTest, str);
 	printf("%s\n", compr);
@@ -64,6 +63,10 @@ int main(void){
 
 	free(decompr);
 	free(compr);
-	detruire(&TreeTest);
+	detruire(&TreeTest);*/
+
+	compression_Fichier("tests.txt");
+
+
 	return EXIT_SUCCESS;
 }

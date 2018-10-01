@@ -272,17 +272,21 @@ void compression_Fichier(char *name){
 
 	fclose(fp);
 
-	/* ---------- Fin gérer fichier ---------- */
-	printf("Taille = %d\n", strlen(texte));
+	/* ---------- Compression du texte ---------- */
 	nd arbreCompression = stringEncoding(texte);
 	char* compr = compression(arbreCompression, texte);
 
-	printf("Texte Original : \n%s\n", texte);
-	printf("Texte compressé : \n%s\n", compr);
-
 	free(texte);
-	free(compr);
 	detruire(&arbreCompression);
+	printf("Compression = %s\n", compr);
+
+	/* ---------- Ecriture dans un fichier ---------- */
+	fp = fopen("compression.cp", "w");
+	fwrite(compr, sizeof(char), strlen(compr), fp);
+	fclose(fp);
+
+
+	free(compr);
 
 
 }

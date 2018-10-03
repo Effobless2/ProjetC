@@ -21,5 +21,6 @@ int nodeComparision(nd, nd);
 nd fusion(nd, nd);
 char* recherchePrefixe(nd src, char val);
 char* compression(nd src, char *str);
-void compression_Fichier(char *name);
+nd compression_Fichier(char *name);
 char* decompression(nd src, char *str);
+char* decompression_Fichier(char *, nd);

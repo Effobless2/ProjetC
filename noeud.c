@@ -266,7 +266,7 @@ char* compression(nd src, char *str){
 	return rt;
 }
 
-void compression_Fichier(char *name){
+nd compression_Fichier(char *name){
 	// On lit le fichier et on store les char dans un tableau et on en profite pour compter le nb de symbole
 	FILE *fp;
 	int taille = 0;
@@ -290,16 +290,50 @@ void compression_Fichier(char *name){
 	char* compr = compression(arbreCompression, texte);
 
 	free(texte);
-	detruire(&arbreCompression);
+	//detruire(&arbreCompression);
 	printf("Compression = %s\n", compr);
 
 	/* ---------- Ecriture dans un fichier ---------- */
-	fp = fopen("compression.cp", "w");
+	fp = fopen("compression.txt", "w");
 	fwrite(compr, sizeof(char), strlen(compr), fp);
 	fclose(fp);
 
 
 	free(compr);
+
+	return arbreCompression;
+
+
+}
+
+char* decompression_Fichier(char *name, nd arbre){
+	FILE *fp;
+	int taille = 0;
+	char* texte;
+	
+
+	fp = fopen(name, "r");
+	// On récupère la taille en allant à la fin du fichier 
+	fseek(fp, 0, SEEK_END); // on va a la fin du fichier
+	taille = ftell(fp); // cb de bits on a parcouru
+	rewind(fp); // retour au début
+	
+	texte = malloc(taille+1 * sizeof(char));
+
+	fread(texte, taille, 1, fp);
+	texte[taille] = '\0';
+
+	fclose(fp);
+
+	char* res = decompression(arbre, texte);
+	free(texte);
+
+	return res;
+	
+
+	///Penser faire fonction lecture fichier
+
+
 
 
 }

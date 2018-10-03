@@ -1,4 +1,4 @@
-#include "liste_nd.h"
+#include "huffman.h"
 #include <time.h>
 
 int main(void){

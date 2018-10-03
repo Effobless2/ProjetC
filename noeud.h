@@ -1,6 +1,4 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 typedef struct noeud* nd;
 
@@ -19,8 +17,3 @@ void detruire(nd* src);
 void afficher(nd n);
 int nodeComparision(nd, nd);
 nd fusion(nd, nd);
-char* recherchePrefixe(nd src, char val);
-char* compression(nd src, char *str);
-nd compression_Fichier(char *name);
-char* decompression(nd src, char *str);
-char* decompression_Fichier(char *, nd);

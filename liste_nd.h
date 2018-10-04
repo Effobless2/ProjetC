@@ -12,5 +12,4 @@ void addToList(lt, char);
 void suppressNode(lt*,nd);
 void afficherList(lt);
 void destroyList(lt);
-nd stringEncoding(char *);
 //void fuse(lt**, lt**);

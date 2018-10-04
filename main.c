@@ -1,4 +1,4 @@
-#include "liste_nd.h"
+#include "huffman.h"
 #include <time.h>
 
 int main(void){
@@ -65,7 +65,15 @@ int main(void){
 	free(compr);
 	detruire(&TreeTest);*/
 
-	compression_Fichier("tests.txt");
+	nd tree = compression_Fichier("tests.txt");
+
+	char *decomp = decompression_Fichier("compression.txt", tree);
+
+	printf("décompressé = %s", decomp);
+
+	detruire(&tree);
+
+	free(decomp);
 
 
 	return EXIT_SUCCESS;

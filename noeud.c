@@ -14,7 +14,7 @@ void afficher(nd n){
 	}
 }
 
-nd creer_noeud(char val, int occ)
+nd creer_noeud(char val, void *occ)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
 
@@ -26,26 +26,26 @@ nd creer_noeud(char val, int occ)
 	return res;
 }
 
-void ajout(nd *src, char val)
+void ajout(nd *src, char val, void *occ)
 {
 	if ((*src) != NULL)
 	{
 		if ((*src)->val == val)
 		{
-			(*src)->occ++;
+			return;
 		} else if (val < (*src)->val)
 		{
 			printf("Ajout gauche \n");
-			ajout(&(*src)->gauche, val);
+			ajout(&(*src)->gauche, val, occ);
 		} else
 		{
 			printf("Ajout droite \n");
-			ajout(&(*src)->droite, val);
+			ajout(&(*src)->droite, val, occ);
 		}
 	} else
 	{
 		printf("null \n");
-		(*src) = creer_noeud(val, 1);
+		(*src) = creer_noeud(val, occ);
 	}
 }
 
@@ -171,156 +171,6 @@ nd *rechercher(nd *racine, char val)
 }
 
 
-char* recherchePrefixe(nd src, char val){
-	if( (*src).val == NULL ){
-		//puts("Entrer dans le if null");
-		if( (*src).gauche != NULL ){
-			//puts("Entrer dans le gauche");
-			char *rc = recherchePrefixe( (*src).gauche, val );
-			//printf("%s\n", rc);
-
-			if( rc != NULL){
-				//puts("rc pas null");
-				//printf("Taille rc = %d\n", sizeof(rc));
-				char *temp = malloc(sizeof(rc)+ sizeof(char));
-				//printf("Taille temp = %d\n", sizeof(temp));
-				temp[0] = '0';
-				int i;
-				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
-					temp[i+1] = rc[i];
-				}
-				temp[i] = '\o';
-				//strcat(temp, rc);
-				if (strlen(rc) != 0){
-					free(rc);
-				}
-				//printf("%s\n", temp);
-				return temp;
-			}
-		}
-
-		if( (*src).droite != NULL ){
-			//puts("Entrer dans le droite");
-			char *rc = recherchePrefixe( (*src).droite, val );
-			
-			if( rc != NULL){
-				//puts("rc pas null");
-				//printf("Taille rc = %d\n", sizeof(rc));
-				char *temp = malloc(sizeof(rc)+ sizeof(char));
-				//printf("Taille temp = %d\n", sizeof(temp));
-				temp[0] = '1';
-				int i;
-				for (i = 0; i < sizeof(rc)/sizeof(char); i++){
-					temp[i+1] = rc[i];
-				}
-				temp[i] = '\o';
-				//strcat(temp, rc);
-				if (strlen(rc) != 0){
-					free(rc);
-				}
-				//printf("%s\n", temp);
-				return temp;
-			}
-		}
-
-	}else if( (*src).val == val){
-		//puts("if val == ");
-		return "";
-	}
-
-	return NULL;
-}
-
-
-char* compression(nd src, char *str){
-	int i=0;
-	char *rt = malloc(sizeof(char));
-	rt[0] = '\0';
-	char *temp;
-	while(i < strlen(str)){
-		//printf("while i = %d\n", i);
-		temp = recherchePrefixe(src, str[i]);
-		//printf("Temp : %s\n", temp);
-		//puts("apres recherche");
-		rt = realloc( rt, sizeof(char) * (strlen(rt) + strlen(temp)) + 1 );
-		strcat(rt, temp);
-		//printf("Temp : %s\n", rt);
-		i++;
-		free(temp);
-	}
-
-	printf("taille = %d | %d\n", strlen(rt), strlen(rt)*sizeof(char));
-	return rt;
-}
-
-void compression_Fichier(char *name){
-	// On lit le fichier et on store les char dans un tableau et on en profite pour compter le nb de symbole
-	FILE *fp;
-	int taille = 0;
-	char* texte;
-
-	fp = fopen(name, "r");
-	// On récupère la taille en allant à la fin du fichier 
-	fseek(fp, 0, SEEK_END); // on va a la fin du fichier
-	taille = ftell(fp); // cb de bits on a parcouru
-	rewind(fp); // retour au début
-
-	texte = malloc(taille+1 * sizeof(char));
-
-	fread(texte, taille, 1, fp);
-	texte[taille] = '\0';
-
-	fclose(fp);
-
-	/* ---------- Compression du texte ---------- */
-	nd arbreCompression = stringEncoding(texte);
-	char* compr = compression(arbreCompression, texte);
-
-	free(texte);
-	detruire(&arbreCompression);
-	printf("Compression = %s\n", compr);
-
-	/* ---------- Ecriture dans un fichier ---------- */
-	fp = fopen("compression.cp", "w");
-	fwrite(compr, sizeof(char), strlen(compr), fp);
-	fclose(fp);
-
-
-	free(compr);
-
-
-}
-
-char* decompression(nd src, char *str){
-	
-	int i = 0;
-	char *rt = malloc(sizeof(char));
-	nd temp = src;
-	rt[0] = '\0';
-
-	while( i < strlen(str)+1 ){
-		if( (*temp).val != NULL ){
-			rt = realloc( rt, sizeof(char) * (strlen(rt)) + 2);
-			// printf("Temp val = %c\n", (*temp).val);
-			char valTemp[2];
-			valTemp[0] = (*temp).val;
-			valTemp[1] = '\0';
-			strcat(rt, valTemp);
-			temp = src;
-		}else{
-			if( str[i] == '0' ){
-				temp = (*temp).gauche;
-			}else{
-				temp = (*temp).droite;
-			}
-			i++;
-		}
-
-	}
-
-	return rt;
-}
-
 void detruire(nd *rac)
 {
 	if ((*rac) != NULL)
@@ -336,7 +186,7 @@ void detruire(nd *rac)
 
 
 nd fusion(nd n1, nd n2){
-	nd res = creer_noeud(NULL, n1->occ + n2->occ);
+	nd res = creer_noeud(NULL, (int)n1->occ + (int)n2->occ);
 	if (n1->occ > n2->occ){
 		res->droite = n1;
 		res->gauche = n2;

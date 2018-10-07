@@ -178,9 +178,9 @@ char* compression(nd src, char *str){
 	for (int i = 0; i < nbletters; i++){
 		free(lprefixes[i]);
 	}
-
-	rt = stringBinary_to_stringASCII(rt);
-	return rt;
+	char *result = stringBinary_to_stringASCII(rt);
+	free(rt);
+	return result;
 }
 
 char* recherchePrefixe(nd src, char val){

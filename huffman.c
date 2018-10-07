@@ -82,7 +82,7 @@ nd compression_Fichier(char *name){
 
 	free(texte);
 	//detruire(&arbreCompression);
-	printf("Compression = %s\n", compr);
+	//printf("Compression = %s\n", compr);
 
 	/* ---------- Ecriture dans un fichier ---------- */
 	FILE *fp = fopen("compression.txt", "w");
@@ -136,8 +136,9 @@ char* decompression(nd src, char *str){
 	return rt;
 }
 
+
 char* compression(nd src, char *str){
-	char **lprefixes[30];
+	char **lprefixes[3000];
 	nd prefixes = NULL;
 	int nbletters = 0;
 
@@ -166,33 +167,30 @@ char* compression(nd src, char *str){
 			nbletters++;
 		}
 		
-		//printf("Temp : %s\n", temp);
 		//puts("apres recherche");
 		rt = realloc( rt, sizeof(char) * (strlen(rt) + strlen(temp)) + 1 );
 		strcat(rt, temp);
 		//printf("Temp : %s\n", rt);
 		i++;
 	}
+
 	detruire(&prefixes);
 	for (int i = 0; i < nbletters; i++){
 		free(lprefixes[i]);
 	}
 
-	printf("taille = %d | %d\n", strlen(rt), strlen(rt)*sizeof(char));
+	rt = stringBinary_to_stringASCII(rt);
 	return rt;
 }
-
 
 char* recherchePrefixe(nd src, char val){
 	if( (*src).val == NULL ){
 		char prefixe;
 		nd noeud;
 		char *rc = NULL;
-		//puts("Entrer dans le if null");
 		if( (*src).gauche != NULL ){
 			noeud = (*src).gauche;
 			prefixe = '0';
-			//puts("Entrer dans le gauche");
 			rc = recherchePrefixe( noeud, val );
 			//printf("%s\n", rc);
 		}

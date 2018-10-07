@@ -35,16 +35,16 @@ void ajout(nd *src, char val, void *occ)
 			return;
 		} else if (val < (*src)->val)
 		{
-			printf("Ajout gauche \n");
+			//printf("Ajout gauche \n");
 			ajout(&(*src)->gauche, val, occ);
 		} else
 		{
-			printf("Ajout droite \n");
+			//printf("Ajout droite \n");
 			ajout(&(*src)->droite, val, occ);
 		}
 	} else
 	{
-		printf("null \n");
+		//printf("null \n");
 		(*src) = creer_noeud(val, occ);
 	}
 }

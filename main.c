@@ -66,14 +66,15 @@ int main(void){
 	detruire(&TreeTest);*/
 
 	nd tree = compression_Fichier("tests.txt");
+	detruire(&tree);
 
-	char *decomp = decompression_Fichier("compression.txt", tree);
+	/*char *decomp = decompression_Fichier("compression.txt", tree);
 
-	printf("décompressé = %s", decomp);
+	printf("décompressé = %s\n", decomp);
 
 	detruire(&tree);
 
-	free(decomp);
+	free(decomp);*/
 
 
 	return EXIT_SUCCESS;

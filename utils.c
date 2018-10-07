@@ -35,7 +35,7 @@ char* stringBinary_to_stringASCII(char *src){
 		if(compt >= 8){
 			compt = 0;
 			icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-			printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
+			//printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
 			rt = realloc(rt, sizeof(char) * t_rt+1);
 			rt[t_rt-1] = (char) icompr;
 			rt[t_rt] = '\0';

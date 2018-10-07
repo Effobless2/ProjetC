@@ -168,6 +168,7 @@ char* compression(nd src, char *str){
 		}
 		
 		//puts("apres recherche");
+		//printf("%d\n", strlen(rt));
 		rt = realloc( rt, sizeof(char) * (strlen(rt) + strlen(temp)) + 1 );
 		strcat(rt, temp);
 		//printf("Temp : %s\n", rt);
@@ -212,7 +213,7 @@ char* recherchePrefixe(nd src, char val){
 			for (i = 0; i < sizeof(rc)/sizeof(char); i++){
 				temp[i+1] = rc[i];
 			}
-			temp[i] = '\o';
+			temp[i] = '\0';
 			//strcat(temp, rc);
 			if (strlen(rc) != 0){
 				free(rc);

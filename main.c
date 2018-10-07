@@ -65,7 +65,7 @@ int main(void){
 	free(compr);
 	detruire(&TreeTest);*/
 
-	nd tree = compression_Fichier("tests.txt");
+	nd tree = compression_Fichier("testProf.txt");
 	detruire(&tree);
 
 	/*char *decomp = decompression_Fichier("compression.txt", tree);

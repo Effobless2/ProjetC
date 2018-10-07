@@ -43,18 +43,6 @@ char* stringBinary_to_stringASCII(char *src){
 		}
 	}
 
-	/*if(compt < 8){
-		int diff = 7 - compt;
-		printf("%d\n", diff);
-		for(int i=diff; i<7; diff++){
-			acompr[diff] = '0';
-		}
-		icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-		rt = realloc(rt, sizeof(char) * t_rt+1);
-		t_rt ++;
-		rt[t_rt] = (char) icompr;
-	}*/
-
 	while(compt < 8){
 		acompr[compt] = '0';
 		compt++;
@@ -65,4 +53,45 @@ char* stringBinary_to_stringASCII(char *src){
 	rt[t_rt] = (char) icompr;
 
 	return rt;
+}
+
+char* stringASCII_to_stringBinary(char *src){
+	char *rt = malloc(sizeof(char));
+	rt[0] = '\0';
+	int t_rt = 1;
+	int codeASCII = 0; // Le décimal récupéré depuis un caractère de la chaîne avec un cast 
+	char codeASCII_binaire[8];
+
+	int taille = strlen(src);
+	for(int i=0; i<taille; i++){
+		codeASCII = (int) src[i];
+		int_to_stringBinary(codeASCII, codeASCII_binaire);
+		//printf("Binaire de %c (%d) = %s\n", src[i], codeASCII, codeASCII_binaire);
+		rt = realloc(rt, sizeof(char) * (t_rt + 9));
+		strcat(rt, codeASCII_binaire);
+		t_rt = strlen(rt);
+		rt[t_rt] = '\0';
+	}	
+
+	return rt;
+}
+
+void int_to_stringBinary(int n, char* dst){
+
+	int i=7;
+
+	do {
+   		if (n & 1) {
+       		dst[i] = '1';
+   		} else {
+       		dst[i] = '0';
+   		}
+   		n >>= 1;
+   		i--;
+	} while(n);
+
+	while(i>=0){
+		dst[i] = '0';
+		i--;
+	}
 }

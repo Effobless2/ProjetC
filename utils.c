@@ -26,16 +26,19 @@ char* stringBinary_to_stringASCII(char *src){
 	int t_rt = 1; // taille de la chaine a retourner
 	char acompr[8] = ""; // string binaire
 	int icompr = 0; // string binaire en dec
-	int compt = 0; // compteur de bits
+	int compt = 2; // compteur de bits
 
 	int taille = strlen(src);
 	for(int i=0; i<taille; i++){
 		acompr[compt] = src[i];
 		compt++;
-		if(compt >= 8){
-			compt = 0;
+		printf("%d | %s \n", compt, acompr);
+		if(compt >= 7){
+			acompr[0] = '0';
+			acompr[1] = '1';
+			compt = 2;
 			icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-			//printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
+			printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
 			rt = realloc(rt, sizeof(char) * t_rt+1);
 			rt[t_rt-1] = (char) icompr;
 			rt[t_rt] = '\0';
@@ -43,12 +46,14 @@ char* stringBinary_to_stringASCII(char *src){
 		}
 	}
 
-	while(compt < 8){
+	while(compt < 7){
 		acompr[compt] = '0';
 		compt++;
 	}
+	acompr[0] = '0';
+	acompr[1] = '1';
 	icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-	//printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
+	printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
 	rt = realloc(rt, sizeof(char) * t_rt+1);
 	rt[t_rt] = (char) icompr;
 

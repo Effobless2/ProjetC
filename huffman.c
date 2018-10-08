@@ -98,10 +98,14 @@ nd compression_Fichier(char *name){
 }
 
 char* decompression_Fichier(char *name, nd arbre){
+	printf("Lecture du fichier %s\n", name);
 	char *texte = readFile(name);
 
-	char* res = decompression(arbre, texte);
+	char *texte_binaire = stringASCII_to_stringBinary(texte);
+	puts("texte ascii transformé en binaire");
+	char* res = decompression(arbre, texte_binaire);
 	free(texte);
+	free(texte_binaire);
 
 	return res;
 }
@@ -132,7 +136,6 @@ char* decompression(nd src, char *str){
 		}
 
 	}
-
 	return rt;
 }
 

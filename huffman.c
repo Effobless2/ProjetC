@@ -6,7 +6,7 @@ nd stringEncoding(char *text){
     for (int i = 1; i < strlen(text); i++){
         addToList(list, text[i]);
     }
-    //afficherList(list);
+    afficherList(list);
     //printf("list : %p\n",&list);
     while(list->next != NULL){
         lt *curList = &list;
@@ -68,6 +68,8 @@ nd stringEncoding(char *text){
     //afficher(res);
     //printf("\n");
     destroyList(list);
+	printf("somme de noeuds : %d\n", res->occ);// 01100011
+	printf("L = %d\n", res->gauche->droite->droite->gauche->gauche->gauche->droite->droite->gauche->gauche->gauche->droite->gauche->val);
 
     return res;
 }
@@ -117,7 +119,8 @@ char* decompression(nd src, char *str){
 	nd temp = src;
 	rt[0] = '\0';
 
-	while( i < strlen(str)+1 ){
+	while( i < strlen(str) ){
+		//printf("décomp cur bit : %c\n", str[i]);
 		if( (*temp).val != NULL ){
 			rt = realloc( rt, sizeof(char) * (strlen(rt)) + 2);
 			// printf("Temp val = %c\n", (*temp).val);
@@ -154,6 +157,7 @@ char* compression(nd src, char *str){
 
 		if (prefixes == NULL){
 			temp = recherchePrefixe(src, str[i]);
+			//printf("Compression Char %c : %s\n", str[i], temp); // 01100011  il manque 00010
 			prefixes = creer_noeud(str[i], temp);
 			lprefixes[0] = temp;
 			nbletters++;
@@ -182,12 +186,52 @@ char* compression(nd src, char *str){
 	for (int i = 0; i < nbletters; i++){
 		free(lprefixes[i]);
 	}
+	printf("compressé : %s\n", rt);
 	char *result = stringBinary_to_stringASCII(rt);
 	free(rt);
 	return result;
 }
 
+char *recherchePrefixe(nd src, char val){
+	if (src->val != NULL){
+		if (src->val == val){
+			char * res = malloc(sizeof(char));
+			res[0]= '\0';
+			return res;
+		}
+		else{
+			return NULL;
+		}
+	}
+	else{
+		char *res = recherchePrefixe(src->gauche, val);
+		if (res != NULL){
+			char *temp = malloc(sizeof(char) * (strlen(res) + 2));
+			temp[0] = '0';
+			temp[1] = '\0';
+			strcat(temp, res);
+			free(res);
+			return temp;
+		}
+		else{
+			res = recherchePrefixe(src->droite, val);
+			if (res != NULL){
+				char *temp = malloc(sizeof(char) * (strlen(res) + 2));
+				temp[0] = '1';
+				temp[1] = '\0';
+				strcat(temp, res);
+				free(res);
+				return temp;
+			}
+			else{
+				return NULL;
+			}
+		}
+	}
+}
+/*
 char* recherchePrefixe(nd src, char val){
+	printf("valeur %c\n", val);
 	if( (*src).val == NULL ){
 		char prefixe;
 		nd noeud;
@@ -227,8 +271,10 @@ char* recherchePrefixe(nd src, char val){
 
 	} else if( (*src).val == val){
 		//puts("if val == ");
+		printf("Valeur trouvée = %c\n", (*src).val);
 		return "";
 	}
+	puts("NULL");
 
 	return NULL;
-}
+}*/

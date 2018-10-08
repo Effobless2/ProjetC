@@ -15,13 +15,13 @@ char *readFile(char *name){
 
 	fread(texte, taille, 1, fp);
 	texte[taille] = '\0';
-
 	fclose(fp);
     return texte;
 }
 
 char* stringBinary_to_stringASCII(char *src){
 	char* rt = malloc(sizeof(char));
+	printf("src string to ascii = %s\n", src);
 	rt[0] = '\0';
 	int t_rt = 1; // taille de la chaine a retourner
 	char acompr[8] = ""; // string binaire
@@ -60,37 +60,39 @@ char* stringASCII_to_stringBinary(char *src){
 	rt[0] = '\0';
 	int t_rt = 1;
 	unsigned int codeASCII = 0; // Le décimal récupéré depuis un caractère de la chaîne avec un cast 
-	char *codeASCII_binaire = malloc(sizeof(char)*8);
+	char *codeASCII_binaire = malloc(sizeof(char)*9);
 
 	int taille = strlen(src);
 	for(int i=0; i<taille; i++){
-		codeASCII = (unsigned int) src[i];
+		codeASCII = (unsigned char) src[i];
 		int_to_stringBinary(codeASCII, codeASCII_binaire);
-		rt = realloc(rt, sizeof(char) * (t_rt + 9));
+		codeASCII_binaire[8] = '\0';
+		rt = realloc(rt, sizeof(char) * (t_rt + 8));
 		strcat(rt, codeASCII_binaire);
-		t_rt = strlen(rt);
-		//rt[t_rt] = '\0';
+		t_rt +=8;
 	}	
 
 	free(codeASCII_binaire);
+	printf("décomp : %s\n", rt);
 	return rt;
 }
 
-void int_to_stringBinary(unsigned int n, char* dst){
+void int_to_stringBinary(unsigned char n, char* dst){
 
 	int i=7;
 	do {
-   		if (n & 1) {
+   		if (n%2 == 1) {
        		dst[i] = '1';
    		} else {
        		dst[i] = '0';
    		}
    		n >>= 1;
    		i--;
-	} while(n);
+	} while(i >=0);
 
+	/*
 	while(i>=0){
 		dst[i] = '0';
 		i--;
-	}
+	}*/
 }

@@ -6,7 +6,7 @@ nd stringEncoding(char *text){
     for (int i = 1; i < strlen(text); i++){
         addToList(list, text[i]);
     }
-    //afficherList(list);
+    afficherList(list);
     //printf("list : %p\n",&list);
     while(list->next != NULL){
         lt *curList = &list;
@@ -68,6 +68,8 @@ nd stringEncoding(char *text){
     //afficher(res);
     //printf("\n");
     destroyList(list);
+	printf("somme de noeuds : %d\n", res->occ);// 01100011
+	//printf("L = %d\n", res->gauche->droite->droite->gauche->gauche->gauche->droite->droite->gauche->gauche->gauche->droite->gauche->val);
 
     return res;
 }
@@ -75,10 +77,13 @@ nd stringEncoding(char *text){
 nd compression_Fichier(char *name){
 	// On lit le fichier et on store les char dans un tableau et on en profite pour compter le nb de symbole
 	char *texte = readFile(name);
+	puts("*****Read file");
 
 	/* ---------- Compression du texte ---------- */
 	nd arbreCompression = stringEncoding(texte);
+	puts("*****Arbre done");
 	char* compr = compression(arbreCompression, texte);
+	puts("*****Compression faite");
 
 	free(texte);
 	//detruire(&arbreCompression);
@@ -88,6 +93,7 @@ nd compression_Fichier(char *name){
 	FILE *fp = fopen("compression.txt", "w");
 	fwrite(compr, sizeof(char), strlen(compr), fp);
 	fclose(fp);
+	puts("*****Ajout dans le fichier fait");
 
 
 	free(compr);
@@ -103,9 +109,64 @@ char* decompression_Fichier(char *name, nd arbre){
 
 	char *texte_binaire = stringASCII_to_stringBinary(texte);
 	puts("texte ascii transformé en binaire");
-	char* res = decompression(arbre, texte_binaire);
+	char *prefixedBinary = HeaderRemoving(texte_binaire);
+	printf("decompression sans headers = %s\n", prefixedBinary);
+	char* res = decompression(arbre, prefixedBinary);
 	free(texte);
 	free(texte_binaire);
+	free(prefixedBinary);
+
+	return res;
+}
+
+/*char *HeaderRemoving(char *headeredBinary){
+	int taille = strlen(headeredBinary);
+	printf("Taille = %d | (6*taille / 8) = %d\n", taille, ((6*taille/8)));
+	char *res = malloc(sizeof(char) * ((6 * strlen(headeredBinary)/8) + 1));
+	puts("ah oui");
+	int cpt = 0;
+	int i = 0;
+	while (i < strlen(headeredBinary)){
+		if(cpt == 0){
+			i += 2;
+			cpt = 6;
+		}
+		else{
+			i++;
+			cpt--;
+		}
+		res[i] = headeredBinary[i];
+		//printf("res = %s | headeredBinary[%d] = %c\n", res, i, headeredBinary[i]);
+	}
+	res[(6 * strlen(headeredBinary)/8)] = '\0';
+	printf("Res = \n%s\n", res);
+	return res;
+}*/
+
+char* HeaderRemoving(char *headeredBinary){
+	int taille = strlen(headeredBinary);
+	int newTaille = (6*taille)/8;
+	printf("Taille = %d | (6*taille)/8 = %d \n", taille, newTaille);
+
+	char *res = malloc( sizeof(char) * newTaille+1 );
+	int cmpt = 0; // reset tout les 6 bits
+	int i = 0; // navigation headeredBinary
+	int j = 0; // navigation res
+
+	while(i < taille){
+		if(cmpt == 0){
+			i += 2;
+			cmpt = 6;
+		}else{
+			i++;
+			j++;
+			cmpt--;
+		}
+		res[j] = headeredBinary[i];
+		printf("res = %s | headeredBinary[%d] = %c\n", res, i, headeredBinary[i]);
+	}
+	res[newTaille+1] = '\0';
+	printf("Res = %s\n", res);
 
 	return res;
 }
@@ -117,7 +178,8 @@ char* decompression(nd src, char *str){
 	nd temp = src;
 	rt[0] = '\0';
 
-	while( i < strlen(str)+1 ){
+	while( i < strlen(str) ){
+		//printf("décomp cur bit : %c\n", str[i]);
 		if( (*temp).val != NULL ){
 			rt = realloc( rt, sizeof(char) * (strlen(rt)) + 2);
 			// printf("Temp val = %c\n", (*temp).val);
@@ -154,6 +216,7 @@ char* compression(nd src, char *str){
 
 		if (prefixes == NULL){
 			temp = recherchePrefixe(src, str[i]);
+			//printf("Compression Char %c : %s\n", str[i], temp); // 01100011  il manque 00010
 			prefixes = creer_noeud(str[i], temp);
 			lprefixes[0] = temp;
 			nbletters++;
@@ -182,12 +245,53 @@ char* compression(nd src, char *str){
 	for (int i = 0; i < nbletters; i++){
 		free(lprefixes[i]);
 	}
+	//printf("compressé = \n%s\n", rt);
 	char *result = stringBinary_to_stringASCII(rt);
+	//printf("compressé avec headers = \n%s\n", result);
 	free(rt);
 	return result;
 }
 
+char *recherchePrefixe(nd src, char val){
+	if (src->val != NULL){
+		if (src->val == val){
+			char * res = malloc(sizeof(char));
+			res[0]= '\0';
+			return res;
+		}
+		else{
+			return NULL;
+		}
+	}
+	else{
+		char *res = recherchePrefixe(src->gauche, val);
+		if (res != NULL){
+			char *temp = malloc(sizeof(char) * (strlen(res) + 2));
+			temp[0] = '0';
+			temp[1] = '\0';
+			strcat(temp, res);
+			free(res);
+			return temp;
+		}
+		else{
+			res = recherchePrefixe(src->droite, val);
+			if (res != NULL){
+				char *temp = malloc(sizeof(char) * (strlen(res) + 2));
+				temp[0] = '1';
+				temp[1] = '\0';
+				strcat(temp, res);
+				free(res);
+				return temp;
+			}
+			else{
+				return NULL;
+			}
+		}
+	}
+}
+/*
 char* recherchePrefixe(nd src, char val){
+	printf("valeur %c\n", val);
 	if( (*src).val == NULL ){
 		char prefixe;
 		nd noeud;
@@ -227,8 +331,10 @@ char* recherchePrefixe(nd src, char val){
 
 	} else if( (*src).val == val){
 		//puts("if val == ");
+		printf("Valeur trouvée = %c\n", (*src).val);
 		return "";
 	}
+	puts("NULL");
 
 	return NULL;
-}
+}*/

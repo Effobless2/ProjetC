@@ -43,7 +43,7 @@ void destroyList(lt list){
 }
 
 void afficherList(lt list){
-    //printf("Valeur : %c, Occurence : %d\n", list->val->val, list->val->occ);
+    printf("Valeur : %c, Occurence : %d\n", list->val->val, list->val->occ);
     if (list->next != NULL){
         afficherList(list->next);
     }

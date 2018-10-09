@@ -65,16 +65,16 @@ int main(void){
 	free(compr);
 	detruire(&TreeTest);*/
 
-	nd tree = compression_Fichier("testList.txt");
+	nd tree = compression_Fichier("tests.txt");
 	puts("Compression faite, tree dispo");
 
-	char *decomp = decompression_Fichier("compression.txt", tree);
+	/*char *decomp = decompression_Fichier("compression.txt", tree);
 
 	printf("décompressé = %s\n", decomp);
 
 	detruire(&tree);
 
-	free(decomp);
+	free(decomp);*/
 
 
 	return EXIT_SUCCESS;

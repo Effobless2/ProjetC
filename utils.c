@@ -99,9 +99,9 @@ void int_to_stringBinary(unsigned char n, char* dst){
    		i--;
 	} while(i >=0);
 
-	/*
+	
 	while(i>=0){
 		dst[i] = '0';
 		i--;
-	}*/
+	}
 }

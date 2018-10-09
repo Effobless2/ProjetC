@@ -82,7 +82,7 @@ char* stringASCII_to_stringBinary(char *src){
 	}	
 
 	free(codeASCII_binaire);
-	printf("décomp : %s\n", rt);
+	//printf("décomp : %s\n", rt);
 	return rt;
 }
 

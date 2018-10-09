@@ -25,37 +25,40 @@ char* stringBinary_to_stringASCII(char *src){
 	rt[0] = '\0';
 	int t_rt = 1; // taille de la chaine a retourner
 	char acompr[8] = ""; // string binaire
-	int icompr = 0; // string binaire en dec
+	unsigned int icompr = 0; // string binaire en dec
 	int compt = 2; // compteur de bits
-
 	int taille = strlen(src);
 	for(int i=0; i<taille; i++){
 		acompr[compt] = src[i];
 		compt++;
-		printf("%d | %s \n", compt, acompr);
-		if(compt >= 7){
+		//printf("%d | %s \n", compt, acompr);
+		if(compt > 7){
 			acompr[0] = '0';
 			acompr[1] = '1';
-			compt = 2;
-			icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-			printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
+			icompr = (unsigned int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
+			//printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
 			rt = realloc(rt, sizeof(char) * t_rt+1);
 			rt[t_rt-1] = (char) icompr;
 			rt[t_rt] = '\0';
 			t_rt ++;
+			compt = 2;
+			printf("character de ses morts %s\n", acompr);
 		}
 	}
-
-	while(compt < 7){
-		acompr[compt] = '0';
-		compt++;
-	}
-	acompr[0] = '0';
-	acompr[1] = '1';
-	icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-	printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
-	rt = realloc(rt, sizeof(char) * t_rt+1);
-	rt[t_rt] = (char) icompr;
+	if (compt > 2){
+		while(compt < 7){
+			acompr[compt] = '0';
+			compt++;
+		}
+		acompr[0] = '0';
+		acompr[1] = '1';
+		icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
+		printf("Icompr = %d | %c \n", icompr, ( (char) icompr));
+		rt = realloc(rt, sizeof(char) * t_rt+1);
+		rt[t_rt-1] = (char) icompr;
+		rt[t_rt] = '\0';
+		}
+	
 
 	return rt;
 }

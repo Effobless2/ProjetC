@@ -105,10 +105,32 @@ char* decompression_Fichier(char *name, nd arbre){
 
 	char *texte_binaire = stringASCII_to_stringBinary(texte);
 	puts("texte ascii transformé en binaire");
-	char* res = decompression(arbre, texte_binaire);
+	char *prefixedBinary = HeaderRemoving(texte_binaire);
+	printf("decompression sans headers = %s\n", prefixedBinary);
+	char* res = decompression(arbre, prefixedBinary);
 	free(texte);
 	free(texte_binaire);
+	free(prefixedBinary);
 
+	return res;
+}
+
+char *HeaderRemoving(char *headeredBinary){
+	char *res = malloc(sizeof(char) * ((6 * strlen(headeredBinary)/8) + 1));
+	int cpt = 0;
+	int i = 0;
+	while (i < strlen(headeredBinary)){
+		if(cpt == 0){
+			i += 2;
+			cpt = 6;
+		}
+		else{
+			i++;
+			cpt--;
+		}
+		res[i] = headeredBinary[i];
+	}
+	res[(6 * strlen(headeredBinary)/8)] = '\0';
 	return res;
 }
 
@@ -188,6 +210,7 @@ char* compression(nd src, char *str){
 	}
 	printf("compressé : %s\n", rt);
 	char *result = stringBinary_to_stringASCII(rt);
+	printf ("resulat avec les headers connard ! %s\n", result);
 	free(rt);
 	return result;
 }

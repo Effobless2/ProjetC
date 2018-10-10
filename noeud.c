@@ -214,3 +214,49 @@ int nodeComparision(nd n1, nd n2){
 		return -1;
 	return 0;
 }
+
+char *GetSavedStringForTree(nd tree, char *prefixe){
+	if (tree->val != NULL){
+		char * res = malloc(sizeof(char) * (strlen(prefixe) + 4));
+		res[0] = '\0';
+		strcat(res, prefixe);
+		res[strlen(prefixe)] = ':';
+		res[strlen(prefixe) + 1] = tree->val;
+		res[strlen(prefixe) + 2] = '\n';
+		res[strlen(prefixe) + 3] = '\0';
+
+		if(strlen(prefixe) > 0){
+			free(prefixe);
+		}
+
+		return res;
+	}
+	else{
+		char *prefixeGauche = malloc(sizeof(char) * strlen(prefixe) +2);
+		prefixeGauche[0] = '\0';
+		strcat(prefixeGauche, prefixe);
+		strcat(prefixeGauche, "0");
+		char *prefixeDroite = malloc(sizeof(char) * strlen(prefixe) +2);
+		prefixeDroite[0] = '\0';
+		strcat(prefixeDroite, prefixe);
+		strcat(prefixeDroite, "1");
+
+		if(strlen(prefixe) > 0){
+			free(prefixe);
+		}
+
+		char *gauche = GetSavedStringForTree(tree->gauche, prefixeGauche);
+		char *droite = GetSavedStringForTree(tree->droite, prefixeDroite);
+
+		char *totalRes = malloc(sizeof(char) * (strlen(gauche) + strlen(droite) + 1));
+		totalRes[0] = '\0';
+		strcat(totalRes, gauche);
+		strcat(totalRes, droite);
+
+		free(gauche);
+		free(droite);
+
+		return totalRes;
+
+	}
+}

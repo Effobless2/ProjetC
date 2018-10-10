@@ -74,7 +74,7 @@ nd stringEncoding(char *text){
     return res;
 }
 
-nd compression_Fichier(char *name){
+nd compression_Fichier(char *name, char *newName){
 	// On lit le fichier et on store les char dans un tableau et on en profite pour compter le nb de symbole
 	char *texte = readFile(name);
 	puts("*****Read file");
@@ -90,13 +90,48 @@ nd compression_Fichier(char *name){
 	//printf("Compression = %s\n", compr);
 
 	/* ---------- Ecriture dans un fichier ---------- */
-	FILE *fp = fopen("compression.txt", "w");
+
+	char*nameOfCompil = malloc(sizeof(char) * (strlen(newName) + strlen("/compression.txt") + 3));
+	nameOfCompil[0] = '.';
+	nameOfCompil[1] = '/';
+	nameOfCompil[2] = '\0';
+	strcat(nameOfCompil, newName);
+	nameOfCompil[strlen(newName) + 2] = '\0';
+	printf("%s\n", nameOfCompil);
+
+
+	printf ("%d\n" , mkdir(nameOfCompil, 0700));
+
+	strcat(nameOfCompil, "/compression.txt");
+	//nameOfCompil[strlen(name)-4] = "compression.txt\0";
+	printf("%s\n", nameOfCompil);
+	FILE *fp = fopen(nameOfCompil, "w");
 	fwrite(compr, sizeof(char), strlen(compr), fp);
 	fclose(fp);
+
+	char *nameOfTree = malloc(sizeof(char) * (strlen(newName) + strlen("/tree.txt") + 3));
+	nameOfTree[0] = '.';
+	nameOfTree[1] = '/';
+	nameOfTree[2] = '\0';
+	strcat(nameOfTree, newName);
+	nameOfCompil[strlen(newName) + 2] = '\0';
+	strcat(nameOfTree, "/tree.txt");
+
+	char *StringTree = GetSavedStringForTree(arbreCompression, "");
+	printf("%s\n", StringTree);
+
+	FILE *fT = fopen(nameOfTree, "w");
+	fwrite(StringTree, sizeof(char), strlen(StringTree), fT);
+	fclose(fT);
 	puts("*****Ajout dans le fichier fait");
 
+	free(nameOfCompil);
+
+	free(nameOfTree);
 
 	free(compr);
+
+	free(StringTree);
 
 	return arbreCompression;
 

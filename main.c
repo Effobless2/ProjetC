@@ -10,15 +10,17 @@ void cleanBUFFER(){
 
 void compressionne(){
 	puts("Compression d'un fichier");
-	printf("Entrer le nom de votre fichier :\n>>");
-	char nom[100];
-	scanf("%s", nom);
+	printf("Entrer le nom de votre fichier suivi du nom du fichier compressé:\n>>");
+	char curName[100];
+	char newName[100];
+	scanf("%s %s", curName, newName);
 	cleanBUFFER();
 
-	printf("%s\n", nom);
+	printf("%s\n", newName);
 
-	tree = compression_Fichier(nom);
-	//detruire(&tree);
+	tree = compression_Fichier(curName, newName);
+	detruire(&tree);
+
 }
 
 void decompressionne(){
@@ -98,6 +100,6 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	detruire(&tree);
+	//detruire(&tree);
 	return EXIT_SUCCESS;
 }

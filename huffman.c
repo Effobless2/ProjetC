@@ -108,13 +108,14 @@ char* decompression_Fichier(char *name, nd arbre){
 	char *texte = readFile(name);
 
 	char *texte_binaire = stringASCII_to_stringBinary(texte);
-	puts("texte ascii transformé en binaire");
+	//puts("texte ascii transformé en binaire");
 	char *prefixedBinary = HeaderRemoving(texte_binaire);
 	//printf("decompression sans headers = %s\n", prefixedBinary);
 	char* res = decompression(arbre, prefixedBinary);
 	free(texte);
 	free(texte_binaire);
 	free(prefixedBinary);
+	puts("Decompression terminée");
 
 	return res;
 }

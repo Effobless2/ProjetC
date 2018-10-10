@@ -1,6 +1,8 @@
 #include "huffman.h"
 #include <time.h>
 
+nd tree;
+
 void cleanBUFFER(){
 	int c;
 	while(((c = getchar()) != '\n') && (c != EOF));
@@ -15,8 +17,20 @@ void compressionne(){
 
 	printf("%s\n", nom);
 
-	nd tree = compression_Fichier(nom);
-	detruire(&tree);
+	tree = compression_Fichier(nom);
+	//detruire(&tree);
+}
+
+void decompressionne(){
+	/*
+	puts("Decompression d'un fichier");
+	printf("Entrer le nom de votre fichier :\n>>");
+	char nom[100];
+	scanf("%s", nom);
+	cleanBUFFER();
+	*/
+
+	decompression_Fichier("compression.txt", tree);
 }
 
 
@@ -51,6 +65,7 @@ int main(int argc, char *argv[]){
 	char *test;
 
 	puts("-----CODAGE DE HUFFMAN-----");
+	puts("Bonjour ! ");
 	puts("1 - Compression de fichier");
 	puts("2 - Decompression de fichier");
 	puts("3 - Quitter le programme");
@@ -70,7 +85,7 @@ int main(int argc, char *argv[]){
 				compressionne();
 				break;
 			case 2:
-				puts("decompr");
+				decompressionne();
 				break;
 			case 3:
 				puts("Merci d'avoir utiliser le codage de Huffman");
@@ -82,5 +97,6 @@ int main(int argc, char *argv[]){
 		}
 	}
 
+	detruire(&tree);
 	return EXIT_SUCCESS;
 }

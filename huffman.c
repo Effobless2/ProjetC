@@ -68,7 +68,7 @@ nd stringEncoding(char *text){
     //afficher(res);
     //printf("\n");
     destroyList(list);
-	printf("somme de noeuds : %d\n", res->occ);// 01100011
+	//printf("somme de noeuds : %d\n", res->occ);// 01100011
 	//printf("L = %d\n", res->gauche->droite->droite->gauche->gauche->gauche->droite->droite->gauche->gauche->gauche->droite->gauche->val);
 
     return res;
@@ -108,13 +108,14 @@ char* decompression_Fichier(char *name, nd arbre){
 	char *texte = readFile(name);
 
 	char *texte_binaire = stringASCII_to_stringBinary(texte);
-	puts("texte ascii transformé en binaire");
+	//puts("texte ascii transformé en binaire");
 	char *prefixedBinary = HeaderRemoving(texte_binaire);
-	printf("decompression sans headers = %s\n", prefixedBinary);
+	//printf("decompression sans headers = %s\n", prefixedBinary);
 	char* res = decompression(arbre, prefixedBinary);
 	free(texte);
 	free(texte_binaire);
 	free(prefixedBinary);
+	puts("Decompression terminée");
 
 	return res;
 }
@@ -146,7 +147,7 @@ char* decompression_Fichier(char *name, nd arbre){
 char* HeaderRemoving(char *headeredBinary){
 	int taille = strlen(headeredBinary);
 	int newTaille = (6*taille)/8;
-	printf("Taille = %d | (6*taille)/8 = %d \n", taille, newTaille);
+	//printf("Taille = %d | (6*taille)/8 = %d \n", taille, newTaille);
 
 	char *res = malloc( sizeof(char) * newTaille+1 );
 	int cmpt = 0; // reset tout les 6 bits
@@ -163,10 +164,10 @@ char* HeaderRemoving(char *headeredBinary){
 			cmpt--;
 		}
 		res[j] = headeredBinary[i];
-		printf("res = %s | headeredBinary[%d] = %c\n", res, i, headeredBinary[i]);
+		//printf("res = %s | headeredBinary[%d] = %c\n", res, i, headeredBinary[i]);
 	}
-	res[newTaille+1] = '\0';
-	printf("Res = %s\n", res);
+	res[newTaille] = '\0';
+	//printf("Res = %s\n", res);
 
 	return res;
 }

@@ -9,12 +9,12 @@ nd stringEncoding(char *text){
     for (int i = 1; i < strlen(text); i++){
         addToList(list, text[i]);
     }
-    while(list->next != NULL){
+    while(list->next != NULL){ //tant que la liste ne contient qu'un seul arbre
         lt *curList = &list;
            
         lt *curNode1 = NULL; 
         lt *curNode2 = NULL; //smaller of two Nodes
-        while((*curList) != NULL){
+        while((*curList) != NULL){ //parcourt de la liste chaînée
             if (curNode2 == NULL){
                 curNode2 = curList;
             }
@@ -46,7 +46,7 @@ nd stringEncoding(char *text){
         (*curNode1)->val = fusion;
         lt temp = (*curNode2);
         (*curNode2) = (*curNode2)->next;
-        free(temp);
+        free(temp); //suppression de la liste chaïnée n'ayant plus de raison d'exister
     }
     
     nd res = &((*list->val));
@@ -71,7 +71,7 @@ nd compression_Fichier(char *name, char *newName){
 
 	free(texte);
 
-	/* ---------- Ecriture dans un fichier ---------- */
+	/* ---------- Ecriture dans une archive ---------- */
 
 	char*nameOfCompil = malloc(sizeof(char) * (strlen(newName) + strlen("/compression.txt") + 3));
 	nameOfCompil[0] = '.';
@@ -211,24 +211,24 @@ char* compression(nd src, char *str){
 	while(i < strlen(str)){
 		temp = NULL;
 
-		if (prefixes == NULL){
+		if (prefixes == NULL){ //prefixes est nul -> début du parcourt du texte
 			temp = recherchePrefixe(src, str[i]);
 			prefixes = creer_noeud(str[i], temp);
 			lprefixes[0] = temp;
 			nbletters++;
 		}
 		else{
-			nd *cur = rechercher(&prefixes, str[i]);
+			nd *cur = rechercher(&prefixes, str[i]); //recherche d'abord dans la liste chaînée
 			temp = cur == NULL ? NULL : (char *)((*cur)->occ);
 		}
 
-		if (temp == NULL){
+		if (temp == NULL){ //si le caractère a été rencontré poour la première fois
 			temp = recherchePrefixe(src, str[i]);
 			ajout(&prefixes, str[i], temp);
 			lprefixes[nbletters] = temp;
 			nbletters++;
 		}
-		
+		//concaténation du résultat avec le préfixe du char
 		rt = realloc( rt, sizeof(char) * (strlen(rt) + strlen(temp)) + 1 );
 		strcat(rt, temp);
 		i++;
@@ -248,19 +248,19 @@ char* compression(nd src, char *str){
 	et retourne son préfixe
 */
 char *recherchePrefixe(nd src, char val){
-	if (src->val != NULL){
+	if (src->val != NULL){ //src est uen feuille
 		if (src->val == val){
 			char * res = malloc(sizeof(char));
 			res[0]= '\0';
 			return res;
 		}
 		else{
-			return NULL;
+			return NULL; // val n'est pas inclut dans cette partie de l'arbre
 		}
 	}
 	else{
-		char *res = recherchePrefixe(src->gauche, val);
-		if (res != NULL){
+		char *res = recherchePrefixe(src->gauche, val); //recherche à gauche
+		if (res != NULL){ //si val a pas été trouvé dans les enfants de gauche
 			char *temp = malloc(sizeof(char) * (strlen(res) + 2));
 			temp[0] = '0';
 			temp[1] = '\0';
@@ -269,8 +269,8 @@ char *recherchePrefixe(nd src, char val){
 			return temp;
 		}
 		else{
-			res = recherchePrefixe(src->droite, val);
-			if (res != NULL){
+			res = recherchePrefixe(src->droite, val); //recherche à droite
+			if (res != NULL){ //si val a pas été trouvé dans les enfants de droite
 				char *temp = malloc(sizeof(char) * (strlen(res) + 2));
 				temp[0] = '1';
 				temp[1] = '\0';
@@ -279,7 +279,7 @@ char *recherchePrefixe(nd src, char val){
 				return temp;
 			}
 			else{
-				return NULL;
+				return NULL; //val ne fait définitivement pas partie de l'arbre
 			}
 		}
 	}

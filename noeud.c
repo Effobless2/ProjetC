@@ -243,7 +243,7 @@ int nodeComparision(nd n1, nd n2){
 	prefixe est le prefixe créer avant les appels récursifs
 */
 char *GetSavedStringForTree(nd tree, char *prefixe){
-	if (tree->val != NULL){
+	if (tree->val != NULL){ //si tree est une feuille
 		char * res = malloc(sizeof(char) * (strlen(prefixe) + 5));
 		res[0] = '\0';
 		strcat(res, prefixe);
@@ -251,7 +251,7 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 		res[strlen(prefixe) + 1] = tree->val;
 		res[strlen(prefixe) + 2] = '/';
 		res[strlen(prefixe) + 3] = '7';
-		res[strlen(prefixe) + 4] = '\0';
+		res[strlen(prefixe) + 4] = '\0'; //marque la fin du parcourt de cette partie de l'arbre et retourne le chemin et le caractère associé
 
 		if(strlen(prefixe) > 0){
 			free(prefixe);
@@ -273,8 +273,8 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 			free(prefixe);
 		}
 
-		char *gauche = GetSavedStringForTree(tree->gauche, prefixeGauche);
-		char *droite = GetSavedStringForTree(tree->droite, prefixeDroite);
+		char *gauche = GetSavedStringForTree(tree->gauche, prefixeGauche); //ensemble des chemins pour tous les enfants gauche de l'arbre
+		char *droite = GetSavedStringForTree(tree->droite, prefixeDroite); //ensemble des chemins pour tous les enfants droite de l'arbre
 
 		char *totalRes = malloc(sizeof(char) * (strlen(gauche) + strlen(droite) + 1));
 		totalRes[0] = '\0';
@@ -284,7 +284,7 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 		free(gauche);
 		free(droite);
 
-		return totalRes;
+		return totalRes; //string à écrire dans le fichier tree.txt
 
 	}
 }
@@ -293,21 +293,21 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 	Permet de recréer l'arbre tree à partir d'un préfixe prefixe
 */
 void CreateTreeFromString(nd * racine, char *prefixed){
-	if(prefixed[0] == ':'){
+	if(prefixed[0] == ':'){ //arbre parcourut jusqu'à la feuille contenant le caractère
 		(*racine) = creer_noeud(prefixed[1], 0);
 	}
 	else{
-		if((*racine) == NULL){
+		if((*racine) == NULL){ //si l'on construit une nouvelle branche de l'arbre global
 			(*racine) = creer_noeud(NULL, 0);
 			
 		}
 
-		if(prefixed[0] == '0') {
-			prefixed++;
+		if(prefixed[0] == '0') { //si le chemin demande d'aller à gauche
+			prefixed++; //on déplace le curseur de prefixe afin de passer au prochain pas
 			CreateTreeFromString(&((**racine).gauche), prefixed);
 		}
-		else {
-			prefixed++;
+		else { //si le chemin demande d'aller à droite
+			prefixed++; //on déplace le curseur de prefixe afin de passer au prochain pas
 			CreateTreeFromString(&((**racine).droite), prefixed); 
 		}
 	}

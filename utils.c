@@ -21,8 +21,6 @@ char *readFile(char *name){
 
 char* stringBinary_to_stringASCII(char *src){
 	char* rt = malloc(sizeof(char));
-	//printf("Nb de char = %d\n", strlen(src));
-	//printf("src string to ascii = %s\n", src);
 	rt[0] = '\0';
 	int t_rt = 1; // taille de la chaine a retourner
 	char acompr[8] = ""; // string binaire
@@ -32,18 +30,15 @@ char* stringBinary_to_stringASCII(char *src){
 	for(int i=0; i<taille; i++){
 		acompr[compt] = src[i];
 		compt++;
-		//printf("%d | %s \n", compt, acompr);
 		if(compt > 7){
 			acompr[0] = '0';
 			acompr[1] = '1';
 			icompr = (unsigned int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-	//		printf("Icompr = %d | %c [%s]\n", icompr, ( (char) icompr), acompr);
 			rt = realloc(rt, sizeof(char) * t_rt+1);
 			rt[t_rt-1] = (char) icompr;
 			rt[t_rt] = '\0';
 			t_rt ++;
 			compt = 2;
-			//printf("character de ses morts %s\n", acompr);
 		}
 	}
 	if (compt > 2){
@@ -54,7 +49,6 @@ char* stringBinary_to_stringASCII(char *src){
 		acompr[0] = '0';
 		acompr[1] = '1';
 		icompr = (int) strtol(acompr, NULL, 2); // transforme un string en long avec un cast int dans sa base 2
-	//	printf("Icompr = %d | %c [%s]\n", icompr, ( (char) icompr), acompr);
 		rt = realloc(rt, sizeof(char) * t_rt+1);
 		rt[t_rt-1] = (char) icompr;
 		rt[t_rt] = '\0';
@@ -82,7 +76,6 @@ char* stringASCII_to_stringBinary(char *src){
 	}	
 
 	free(codeASCII_binaire);
-	//printf("décomp : %s\n", rt);
 	return rt;
 }
 

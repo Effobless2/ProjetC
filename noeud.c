@@ -35,16 +35,13 @@ void ajout(nd *src, char val, void *occ)
 			return;
 		} else if (val < (*src)->val)
 		{
-			//printf("Ajout gauche \n");
 			ajout(&(*src)->gauche, val, occ);
 		} else
 		{
-			//printf("Ajout droite \n");
 			ajout(&(*src)->droite, val, occ);
 		}
 	} else
 	{
-		//printf("null \n");
 		(*src) = creer_noeud(val, occ);
 	}
 }
@@ -105,22 +102,18 @@ void supprimer(nd src, char val)
 	if (recherche != NULL)
 	{
 		nd copyRecherche = (*recherche);
-		printf("Copy recherche  = %c\n", (*recherche)->val);
 
 		if ((*recherche)->droite == NULL && (*recherche)->gauche == NULL)
 		{
 			(*recherche) = NULL;
-			printf("feuille\n");
 		}
 		else if ((*recherche)->droite == NULL && (*recherche)->gauche != NULL)
 		{
 			(*recherche) = (*recherche)->gauche;
-			printf("Gauche only\n");
 		}
 		else if ((*recherche)->droite != NULL && (*recherche)->gauche == NULL)
 		{
 			(*recherche) = (*recherche)->droite;
-			printf("Droite only\n");
 
 		}
 		else
@@ -145,8 +138,6 @@ void supprimer(nd src, char val)
 					(*recherche) = remplacant;
 				}
 			}
-			
-			printf("C'est la merde\n");
 		}
 		
 		free(copyRecherche);
@@ -181,7 +172,6 @@ void detruire(nd *rac)
 			detruire(&(*rac)->droite);
 		free((*rac));
 	}
-	//free(rac);
 }
 
 
@@ -224,7 +214,6 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 		res[strlen(prefixe) + 1] = tree->val;
 		res[strlen(prefixe) + 2] = '/';
 		res[strlen(prefixe) + 3] = '7';
-		//res[strlen(prefixe) + 4] = '\n';
 		res[strlen(prefixe) + 4] = '\0';
 
 		if(strlen(prefixe) > 0){
@@ -264,23 +253,20 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 }
 
 void CreateTreeFromString(nd * racine, char *prefixed){
-	printf("%s\n", prefixed);
 	if(prefixed[0] == ':'){
-		(*racine) = creer_noeud(prefixed[1], 0);puts("creation");afficher((*racine));
+		(*racine) = creer_noeud(prefixed[1], 0);
 	}
 	else{
 		if((*racine) == NULL){
 			(*racine) = creer_noeud(NULL, 0);
 			
 		}
-	//afficher((*racine));
+
 		if(prefixed[0] == '0') {
-			puts("gauche");
 			prefixed++;
 			CreateTreeFromString(&((**racine).gauche), prefixed);
 		}
 		else {
-			puts("autre gauche");
 			prefixed++;
 			CreateTreeFromString(&((**racine).droite), prefixed); 
 		}

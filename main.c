@@ -16,8 +16,6 @@ void compressionne(){
 	scanf("%s %s", curName, newName);
 	cleanBUFFER();
 
-	printf("%s\n", newName);
-
 	tree = compression_Fichier(curName, newName);
 	detruire(&tree);
 
@@ -26,13 +24,6 @@ void compressionne(){
 void decompressionne(){
 	puts("Compression d'un fichier");
 	printf("Entrer le nom de votre fichier à dédcompresser suivi du nouveau nom du fichier décompressé:\n>>");
-	/*
-	puts("Decompression d'un fichier");
-	printf("Entrer le nom de votre fichier :\n>>");
-	char nom[100];
-	scanf("%s", nom);
-	cleanBUFFER();
-	*/
 	char curName[100];
 	char newName[100];
 	scanf("%s %s", curName, newName);
@@ -66,13 +57,7 @@ void decompressionne(){
 	strcat(CompPath, curName);
 	strcat(CompPath, "/compression.txt");
 
-
-
-puts("affichage");
-	afficher(tree);
 	char *res = decompression_Fichier(CompPath,tree,newName);
-
-	printf("%s\n", res);
 	
 	free(CompPath);
 	detruire(&tree);

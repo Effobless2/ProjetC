@@ -48,17 +48,3 @@ void afficherList(lt list){
         afficherList(list->next);
     }
 }
-
-/*
-void fuse(lt **node1, lt **node2){
-    //printf("&node2 : %p, node2 : %p, (*node2) : %p\n", &node2, node2, (*node2));
-    nd fusion = creer_noeud(NULL, (**node1)->val->occ + (**node2)->val->occ);
-    fusion->gauche = (**node2)->val;
-    fusion->droite = (**node1)->val;
-    (**node1)->val = fusion;
-    lt temp = (*node2);
-    (*node2) = (**node2)->next;
-    free(temp);
-
-}
-*/

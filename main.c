@@ -48,7 +48,7 @@ void decompressionne(){
 
 	nd tree = NULL;
 	char* token;
-	char *delim ="\n";
+	char *delim ="/7";
 
 	token = strtok(TreeSt, delim);
 	while(token != NULL){

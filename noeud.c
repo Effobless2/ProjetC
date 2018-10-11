@@ -217,13 +217,15 @@ int nodeComparision(nd n1, nd n2){
 
 char *GetSavedStringForTree(nd tree, char *prefixe){
 	if (tree->val != NULL){
-		char * res = malloc(sizeof(char) * (strlen(prefixe) + 4));
+		char * res = malloc(sizeof(char) * (strlen(prefixe) + 5));
 		res[0] = '\0';
 		strcat(res, prefixe);
 		res[strlen(prefixe)] = ':';
 		res[strlen(prefixe) + 1] = tree->val;
-		res[strlen(prefixe) + 2] = '\n';
-		res[strlen(prefixe) + 3] = '\0';
+		res[strlen(prefixe) + 2] = '/';
+		res[strlen(prefixe) + 3] = '7';
+		//res[strlen(prefixe) + 4] = '\n';
+		res[strlen(prefixe) + 4] = '\0';
 
 		if(strlen(prefixe) > 0){
 			free(prefixe);
@@ -264,7 +266,7 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 void CreateTreeFromString(nd * racine, char *prefixed){
 	printf("%s\n", prefixed);
 	if(prefixed[0] == ':'){
-		(*racine) = creer_noeud(prefixed[1], 0);
+		(*racine) = creer_noeud(prefixed[1], 0);puts("creation");afficher((*racine));
 	}
 	else{
 		if((*racine) == NULL){

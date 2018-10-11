@@ -56,7 +56,7 @@ void compressionne(){
 //Utilité : Gère la décompression d'un fichier en utilisant le codage de Huffman.
 //-------------------------------------------------------------------------------
 void decompressionne(){
-	puts("\n\n-----Compression d'un fichier-----");
+	puts("\n\n-----Décompression d'un fichier-----");
 	printf("Saisissez le nom/chemin de votre dossier à décompresser ainsi que le nom du nouveau fichier décompressé :\n");
 	printf("(Vous pouvez les séparer d'un espace ou avec un retour à la ligne)\n>>");
 	char curName[100]; //Nom du fichier à décompresser

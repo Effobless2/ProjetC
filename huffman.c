@@ -1,6 +1,9 @@
 
 #include "huffman.h"
 
+/*
+	Création de l'arbre binaire associé au paramètre text
+*/
 nd stringEncoding(char *text){
     lt list = create(creer_noeud(text[0], 1));
     for (int i = 1; i < strlen(text); i++){
@@ -132,6 +135,10 @@ char* decompression_Fichier(char *name, nd arbre, char *newName){
 	return res;
 }
 
+/*
+	Retourne la chaîne de caractère correspondant au texte 
+	préfixé à décompresser en supprimant les en-têtes de chaque bloc de 8 bits
+*/
 char* HeaderRemoving(char *headeredBinary){
 	int taille = strlen(headeredBinary);
 	int newTaille = (6*taille)/8;
@@ -157,6 +164,11 @@ char* HeaderRemoving(char *headeredBinary){
 	return res;
 }
 
+
+/*
+	Décompresse le texte préfixé str en fonction de l'arbre binaire src
+	et retourne le texte décompressé
+*/
 char* decompression(nd src, char *str){
 	
 	int i = 0;
@@ -184,7 +196,9 @@ char* decompression(nd src, char *str){
 	return rt;
 }
 
-
+/*
+	Compresse le texte str en fonction de l'arbre binaire src
+*/
 char* compression(nd src, char *str){
 	char **lprefixes[3000];
 	nd prefixes = NULL;
@@ -229,6 +243,10 @@ char* compression(nd src, char *str){
 	return result;
 }
 
+/*
+	Parcourt l'arbre src en profondeur jusqu'à trouver le caractère val
+	et retourne son préfixe
+*/
 char *recherchePrefixe(nd src, char val){
 	if (src->val != NULL){
 		if (src->val == val){

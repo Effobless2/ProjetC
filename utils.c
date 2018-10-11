@@ -1,5 +1,7 @@
 #include "utils.h"
-
+/*
+	Permet de lire le contenu d'un fichier possédant comme nom le paramètre name
+*/
 char *readFile(char *name){
     FILE *fp;
 	int taille = 0;
@@ -22,6 +24,9 @@ char *readFile(char *name){
     return texte;
 }
 
+/*
+	Convertie une suite de caractère composée de 0 et de 1 en une suite de caractère ASCII associée
+*/
 char* stringBinary_to_stringASCII(char *src){
 	char* rt = malloc(sizeof(char));
 	rt[0] = '\0';
@@ -61,6 +66,9 @@ char* stringBinary_to_stringASCII(char *src){
 	return rt;
 }
 
+/*
+	Convertie une chaine de caractère ASCII en suite binaire associée
+*/
 char* stringASCII_to_stringBinary(char *src){
 	char *rt = malloc(sizeof(char));
 	rt[0] = '\0';
@@ -82,6 +90,10 @@ char* stringASCII_to_stringBinary(char *src){
 	return rt;
 }
 
+/*
+	Convertie un entier en chaîne de caractère représentant l'entier en binaire
+	mettant le résultat de cette conversion dans dst
+*/
 void int_to_stringBinary(unsigned char n, char* dst){
 
 	int i=7;

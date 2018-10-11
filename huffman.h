@@ -4,10 +4,10 @@
 #include "liste_nd.h"
 
 nd stringEncoding(char *);
-char* recherchePrefixe(nd src, char val);
-char* compression(nd src, char *str);
-char* decompression(nd src, char *str);
+char* recherchePrefixe(nd, char);
+char* compression(nd, char *);
+char* decompression(nd, char *);
 nd compression_Fichier(char *, char *);
-char* searchPrefixe(nd src, char** prefixe);
+char* searchPrefixe(nd, char**);
 char *decompression_Fichier(char *, nd, char *);
 char *HeaderRemoving(char *);

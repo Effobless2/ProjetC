@@ -1,5 +1,8 @@
 #include "noeud.h"
 
+/*
+	Affiche l'arbre mit en paramètre
+*/
 void afficher(nd n){
 	char v = (char)(*n).val;
 	int occ = (int)(*n).occ;
@@ -13,7 +16,9 @@ void afficher(nd n){
 		afficher(n->droite);
 	}
 }
-
+/*
+	Crée un noeud minimal possédant les informations mises en pramètre
+*/
 nd creer_noeud(char val, void *occ)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
@@ -26,6 +31,9 @@ nd creer_noeud(char val, void *occ)
 	return res;
 }
 
+/*
+	Ajoute à l'arbre src un nouveau noeud possédant une valeur val et une occurence occ
+*/
 void ajout(nd *src, char val, void *occ)
 {
 	if ((*src) != NULL)
@@ -46,13 +54,18 @@ void ajout(nd *src, char val, void *occ)
 	}
 }
 
+/*
+	Retourne le noeud max d'un arbre s'il existe
+*/
 nd noeudMax(nd racine){
 	if (racine != NULL){
 		return (*racine).droite == NULL ? racine : noeudMax((*racine).droite);
 	}
 	return NULL;
 }
-
+/*
+	Retourne le noeud min d'un arbre s'il existe
+*/
 nd noeudMin(nd racine){
 	if (racine != NULL){
 		return racine->gauche == NULL ? racine : noeudMin(racine->gauche);
@@ -60,6 +73,9 @@ nd noeudMin(nd racine){
 	return NULL;
 }
 
+/*
+	Retourne le noeud parent d'un noeud possédant la valeur val dans le noeud src (si ce dernier s'y trouve) 
+*/
 nd getParent(nd src, char val){
 	nd curP = src;
 	nd curChild = curP;
@@ -96,6 +112,11 @@ nd getParent(nd src, char val){
 	return curP;
 }
 
+
+/*
+	Supprime le noeud possédant la valeur val dans src et remplace ce premier 
+	dans src par un de ses enfants afin de maintenir la cohhésion générale de l'arbre
+*/
 void supprimer(nd src, char val)
 {
 	nd *recherche = rechercher(&src, val);
@@ -144,6 +165,9 @@ void supprimer(nd src, char val)
 	}
 }
 
+/*
+	retourne l'adresse du pointeur du noeud ayant la valeur val dans racine
+*/
 nd *rechercher(nd *racine, char val)
 {
 	if ((*racine) == NULL)
@@ -161,7 +185,9 @@ nd *rechercher(nd *racine, char val)
 	return (*racine)->gauche == NULL ? NULL : rechercher(&(*racine)->gauche, val);
 }
 
-
+/*
+	Détruit l'arbre 'rac et ses enfants
+*/
 void detruire(nd *rac)
 {
 	if ((*rac) != NULL)
@@ -174,7 +200,9 @@ void detruire(nd *rac)
 	}
 }
 
-
+/*
+	Permettait de fusionner les deux noeuds mis en paramètre mais n'est pas utilisée
+*/
 nd fusion(nd n1, nd n2){
 	nd res = creer_noeud(NULL, (int)n1->occ + (int)n2->occ);
 	if (n1->occ > n2->occ){
@@ -189,6 +217,10 @@ nd fusion(nd n1, nd n2){
 	return res;
 }
 
+/*
+	Compare deux noeuds selon leur occurence et selon leur valeurs.
+	Si leur occurence est égale et leur valeur NULL, nous les comparons en fonction de leurs enfants
+*/
 int nodeComparision(nd n1, nd n2){
 	if (n1->occ > n2->occ)
 		return 1;
@@ -205,6 +237,11 @@ int nodeComparision(nd n1, nd n2){
 	return 0;
 }
 
+
+/*
+	Permet de créer une chaine de caractère représentative de l'arbre tree
+	prefixe est le prefixe créer avant les appels récursifs
+*/
 char *GetSavedStringForTree(nd tree, char *prefixe){
 	if (tree->val != NULL){
 		char * res = malloc(sizeof(char) * (strlen(prefixe) + 5));
@@ -252,6 +289,9 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 	}
 }
 
+/*
+	Permet de recréer l'arbre tree à partir d'un préfixe prefixe
+*/
 void CreateTreeFromString(nd * racine, char *prefixed){
 	if(prefixed[0] == ':'){
 		(*racine) = creer_noeud(prefixed[1], 0);

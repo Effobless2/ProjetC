@@ -6,12 +6,14 @@ CFLAGS := -std=c99 -Wall -Wextra -pedantic -ggdb
 # règle de compilation --- exécutables
 all : main
 
-OBJS := obj/main.o obj/noeud.o obj/liste_nd.o obj/utils.o obj/huffman.o
+SRC := src/
+OBJF := obj/
+OBJS := $(OBJF)main.o $(OBJF)noeud.o $(OBJF)liste_nd.o $(OBJF)utils.o $(OBJF)huffman.o
 
 main : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^	
 
-obj/%.o: %.c
+$(OBJF)%.o: $(SRC)%.c
 	mkdir -p obj
 	$(CC) $(CFLAGS) -o $@ -c $<  -lm
 

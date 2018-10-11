@@ -6,7 +6,7 @@
 
 
 
-#include "huffman.h"
+#include "../h/huffman.h"
 
 
 

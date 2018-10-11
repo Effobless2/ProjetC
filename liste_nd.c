@@ -68,9 +68,7 @@ void suppressNode(lt *list, nd node){
 }
 
 
-/*
-    Détruit la liste chaînée lt et le reste de sa chaîne
-*/
+
 //------------------------------------------------------
 //Paramètres : Pointeur de liste
 //Retourne : void

@@ -65,9 +65,11 @@ void decompressionne(){
 	strcat(CompPath, curName);
 	strcat(CompPath, "/compression.txt");
 
+
+
 puts("affichage");
 	afficher(tree);
-	char *res = decompression_Fichier(CompPath,tree);
+	char *res = decompression_Fichier(CompPath,tree,newName);
 
 	printf("%s\n", res);
 	

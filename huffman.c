@@ -138,7 +138,7 @@ nd compression_Fichier(char *name, char *newName){
 
 }
 
-char* decompression_Fichier(char *name, nd arbre){
+char* decompression_Fichier(char *name, nd arbre, char *newName){
 	//printf("Lecture du fichier %s\n", name);
 	char *texte = readFile(name);
 
@@ -151,6 +151,12 @@ char* decompression_Fichier(char *name, nd arbre){
 	free(texte_binaire);
 	free(prefixedBinary);
 	puts("Decompression terminée");
+
+	FILE * fp = fopen(newName, "w");
+	fwrite(res, sizeof(char), strlen(res), fp);
+	fclose(fp);
+
+	puts("***** Fichier créer");
 
 	return res;
 }

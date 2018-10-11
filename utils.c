@@ -1,3 +1,9 @@
+//--------------------------------------------------------------------
+//Projet de C : Codage de Huffman
+//DEBOFFLE Maxime
+//IDOUX Etienne
+//--------------------------------------------------------------------
+
 #include "utils.h"
 /*
 	Permet de lire le contenu d'un fichier possédant comme nom le paramètre name

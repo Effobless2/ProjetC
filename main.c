@@ -1,64 +1,83 @@
+//--------------------------------------------------------------------
+//Projet de C : Codage de Huffman
+//DEBOFFLE Maxime
+//IDOUX Etienne
+//--------------------------------------------------------------------
+
 #include "huffman.h"
 #include <time.h>
 
 
-/*
-Nettoie le buffer
-*/
+//------------------------------------------------------------------------------------
+//Paramètres : None
+//Retourne : void
+//Utilité : Permet de nettoyer le buffer lors de la lecteur d'entrée de l'utilisateur.
+//------------------------------------------------------------------------------------
 void cleanBUFFER(){
 	int c;
 	while(((c = getchar()) != '\n') && (c != EOF));
 }
 
 
-/*
-	Fonction appelée quand l'utilisateur souhaite compresser un fichier
-	Demande le nom du fichier à compresser et le nom de l'archive à créer
-	et crée l'archive.
-*/
+//-----------------------------------------------------------------------------
+//Paramètres : None
+//Retourne : void
+//Utilité : Gère la compression d'un fichier en utilisant le codage de Huffman.
+//-----------------------------------------------------------------------------
 void compressionne(){
-	puts("Compression d'un fichier");
-	printf("Entrer le nom de votre fichier suivi du nouveau nom du fichier compressé:\n>>");
-	char curName[100];
-	char newName[100];
+	puts("\n\n-----Compression d'un fichier-----");
+	printf("Saisissez le nom/chemin de votre fichier à compresser ainsi que le nom de l'archive où il sera stocké\n");
+	printf("(Vous pouvez les séparer d'un espace ou avec un retour à la ligne)\n>>");
+	char curName[100]; //Nom du fichier à compresser
+	char newName[100]; //Nom du dossier où sera stocké l'arbre et le fichier compressé
 	scanf("%s %s", curName, newName);
 	cleanBUFFER();
 
 	nd tree = compression_Fichier(curName, newName);
+	
+	// Condition si l'arbre est NULL alors le fichier n'existe pas et on sort
 	if(tree == NULL){
-		fprintf(stderr, "[Erreur] Le fichier que vous essayez de compresser n'existe pas\n");
+		fprintf(stderr, "\n[Erreur] Le fichier que vous essayez de compresser n'existe pas\n");
 		return EXIT_FAILURE;
 	}
 
 	detruire(&tree);
 }
 
-/*
-	Fonction appelée quand l'utilisateur souhaite décompresser un fichier
-	Demande le nom de l'archive à décompresser et le nom du fichier à créer
-	et crée ce dernier.
-*/
+
+//-------------------------------------------------------------------------------
+//Paramètres : None
+//Retourne : void
+//Utilité : Gère la décompression d'un fichier en utilisant le codage de Huffman.
+//-------------------------------------------------------------------------------
 void decompressionne(){
-	puts("Compression d'un fichier");
-	printf("Entrer le nom de votre fichier à dédcompresser suivi du nouveau nom du fichier décompressé:\n>>");
-	char curName[100];
-	char newName[100];
+	puts("\n\n-----Compression d'un fichier-----");
+	printf("Saisissez le nom/chemin de votre dossier à décompresser ainsi que le nom du nouveau fichier décompressé :\n");
+	printf("(Vous pouvez les séparer d'un espace ou avec un retour à la ligne)\n>>");
+	char curName[100]; //Nom du fichier à décompresser
+	char newName[100]; //Nom du nouveau fichier où sera stocké la décompression
 	scanf("%s %s", curName, newName);
 	strcat(newName, ".txt");
 
+	// Tableau de char représentant le chemin vers l'arbre du dossier
 	char *TreePath = malloc(sizeof(char) * (3 + strlen(curName) + strlen("/tree.txt")));
 	TreePath[0] = '.';
 	TreePath[1] = '/';
 	TreePath[2] = '\0';
 	strcat(TreePath, curName);
 	strcat(TreePath, "/tree.txt");
+
+	// On tente de lire le fichier, la condition IF représente le cas où le fichier n'existe pas
 	char *TreeSt = readFile(TreePath);
 	if(TreeSt == NULL){
-		fprintf(stderr, "[Erreur] Le fichier que vous essayez de décompresser n'existe pas\n");
+		fprintf(stderr, "\n[Erreur] Le fichier que vous essayez de décompresser n'existe pas\n");
 		return NULL;
 	}
 	free(TreePath);
 
+	// On créer un pointeur de noeud représentant l'arbre à reconstruire
+	// On utilise un token '/7' dans notre fichier pour délimiter chaque préfixe/valeur
+	// On recupère chaque prefixe/valeur individuellement avec strtok
 	nd tree = NULL;
 	char* token;
 	char *delim ="/7";
@@ -70,6 +89,7 @@ void decompressionne(){
 
 	}
 
+	// Tableau de char représentant le chemin du fichier compressé
 	char *CompPath = malloc(sizeof(char) * (3 + strlen(curName) + strlen("/compression.txt")));
 	CompPath[0] = '.';
 	CompPath[1] = '/';
@@ -77,49 +97,46 @@ void decompressionne(){
 	strcat(CompPath, curName);
 	strcat(CompPath, "/compression.txt");
 
+	// On décompresse le fichier et on recupère un tableau de char
 	char *res = decompression_Fichier(CompPath,tree,newName);
 	
+	// Libération des variables allouées
 	free(CompPath);
 	detruire(&tree);
 	free(res);
 	free(TreeSt);
 }
 
-
+//--------------------------------------------------------------------------------
+//Paramètres : None
+//Retourne : int 0 ou 1 pour savoir si le programme s'est bien déroulé
+//Utilité : Interface du codage d'huffman et gestion des entrées de l'utilisateur.
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[]){
 	int choix; // Int representant le choix de l'utilisateur
-	int choisir = 0; // Boolean pour sortir de la boucle
-	int c;
-	char *test;
+	int choisir = 0; // int utilisé comme booléen pour savoir si on sort du programme ou non
 
-	puts("-----CODAGE DE HUFFMAN-----");
-	puts("Bonjour ! ");
-	puts("1 - Compression de fichier");
-	puts("2 - Decompression de fichier");
-	puts("3 - Quitter le programme");
 	while(choisir == 0){
-		printf("Que souhaitez-vous faire ?\n>>");
+
+		puts("-----CODAGE DE HUFFMAN-----");
+		puts("1- Compression | 2- Decompression | 3- Quitter");
+		printf("Entrer l'entier correspondant à l'action que vous souhaitez effectuer\n>>");
+		
 		scanf("%d", &choix);
 		cleanBUFFER();
 		switch(choix){
-			case 0:
-				puts("[Erreur] La saisie n'est pas un entier.");
-				while(((c = getchar()) != '\n') && (c != EOF))
-					printf("%c\n", c);
-				break;
-
-			case 1:
+			case 1: // Cas de la compression
 				compressionne();
 				break;
-			case 2:
+			case 2: //Cas de la décompression
 				decompressionne();
 				break;
-			case 3:
+			case 3: // Cas pour quitter le programme
 				puts("Merci d'avoir utiliser le codage de Huffman");
 				choisir = 1;
 				break;
-			default:
-				printf("[Erreur] \"%d\" n'est pas une valeur valide.\n", choix);
+			default: // Cas entrée non supportée
+				fprintf(stderr, "\n[Erreur] Votre saisie n'est pas une valeur valide.\n", choix);
 				break;
 		}
 	}

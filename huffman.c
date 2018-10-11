@@ -4,11 +4,17 @@
 //IDOUX Etienne
 //--------------------------------------------------------------------
 
+
+
 #include "huffman.h"
 
-/*
-	Création de l'arbre binaire associé au paramètre text
-*/
+
+
+//----------------------------------------------------------------
+//Paramètres : Tableau de char représentant un texte à encodé
+//Retourne : Pointeur de noeud représentant l'arbre de Huffman
+//Utilité : Création de l'arbre binaire associé au paramètre text.
+//----------------------------------------------------------------
 nd stringEncoding(char *text){
     lt list = create(creer_noeud(text[0], 1));
     for (int i = 1; i < strlen(text); i++){
@@ -60,6 +66,15 @@ nd stringEncoding(char *text){
     return res;
 }
 
+
+
+//-----------------------------------------------------------------------------------------------------------
+//Paramètres :
+//		Nom du fichier à compresser
+//		Nom du fichier à créer
+//Retourne : Pointeur de noeud de l'arbre de Huffman
+//Utilité : Applique l'algorithme de Huffman pour créer un arbre et enregistre la traduction dans un fichier.
+//-----------------------------------------------------------------------------------------------------------
 nd compression_Fichier(char *name, char *newName){
 	// On lit le fichier et on store les char dans un tableau et on en profite pour compter le nb de symbole
 	char *texte = readFile(name);
@@ -120,6 +135,16 @@ nd compression_Fichier(char *name, char *newName){
 
 }
 
+
+
+//------------------------------------------------------------------------------------------------------------------
+//Paramètres :
+//		Nom du fichier à décompresser
+//		Pointeur de noeud de l'arbre de Huffman associé au fichier à décompresser
+//		Nom du fichier à créer
+//Retourne : Tableau de noeud représentant le fichier décompressé
+//Utilité : Décompresse un fichier de l'algorithme d'Huffman avec son arbre associé et l'enregistre dans un fichier.
+//------------------------------------------------------------------------------------------------------------------
 char* decompression_Fichier(char *name, nd arbre, char *newName){
 	char *texte = readFile(name);
 
@@ -140,10 +165,13 @@ char* decompression_Fichier(char *name, nd arbre, char *newName){
 	return res;
 }
 
-/*
-	Retourne la chaîne de caractère correspondant au texte 
-	préfixé à décompresser en supprimant les en-têtes de chaque bloc de 8 bits
-*/
+
+
+//---------------------------------------------------------------------------------------------------------------
+//Paramètres : La chaîne ASCII des préfixes
+//Retourne : La chaîne binaire des préfixes sans les ajouts de la compression
+//Utilité : Supprime les préfixes ajoutés lors de la compression à chaque caractère ASCII et renvoie ce résultat.
+//---------------------------------------------------------------------------------------------------------------
 char* HeaderRemoving(char *headeredBinary){
 	int taille = strlen(headeredBinary);
 	int newTaille = (6*taille)/8;
@@ -170,10 +198,14 @@ char* HeaderRemoving(char *headeredBinary){
 }
 
 
-/*
-	Décompresse le texte préfixé str en fonction de l'arbre binaire src
-	et retourne le texte décompressé
-*/
+
+//-----------------------------------------------------------------------------
+//Paramètres :
+//		Arbre de Huffman associé à la chaîne
+//		Chaîne à décompresser
+//Retourne : La chaîne de caractère en paramètre décompressée
+//Utilité : Décompresse le texte préfixé str en fonction de l'abre binaire src.
+//-----------------------------------------------------------------------------
 char* decompression(nd src, char *str){
 	
 	int i = 0;
@@ -201,9 +233,15 @@ char* decompression(nd src, char *str){
 	return rt;
 }
 
-/*
-	Compresse le texte str en fonction de l'arbre binaire src
-*/
+
+
+//-----------------------------------------------------------------------------
+//Paramètres :
+//		Arbre de Huffman associé à la chaîne str
+//		Chaîne de caractère à compresser
+//Retourne : Chaîne de caractère représentant la chaîne en paramètre compressée
+//Utilité : Compresse le texte str en fonction de l'arbre binaire src.
+//-----------------------------------------------------------------------------
 char* compression(nd src, char *str){
 	char **lprefixes[3000];
 	nd prefixes = NULL;
@@ -248,10 +286,15 @@ char* compression(nd src, char *str){
 	return result;
 }
 
-/*
-	Parcourt l'arbre src en profondeur jusqu'à trouver le caractère val
-	et retourne son préfixe
-*/
+
+
+//-------------------------------------------------------------------------------------------------------------------------
+//Paramètres :
+//		Arbre de Huffman
+//		Caractère présent dans l'arbre donné en paramètre
+//Retourne : Le préfixe du caractère dans l'arbre de Huffman
+//Utilité : Parcours l'arbre de Huffman en profondeur jusqu'à trouver le caractère et créer son préfixe au fur et à mesure.
+//-------------------------------------------------------------------------------------------------------------------------
 char *recherchePrefixe(nd src, char val){
 	if (src->val != NULL){
 		if (src->val == val){

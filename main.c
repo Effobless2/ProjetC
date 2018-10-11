@@ -23,7 +23,6 @@ void compressionne(){
 	}
 
 	detruire(&tree);
-
 }
 
 void decompressionne(){
@@ -54,7 +53,6 @@ void decompressionne(){
 	token = strtok(TreeSt, delim);
 	while(token != NULL){
 		CreateTreeFromString(&tree, token);
-		//printf("%s\n", token);
 		token = strtok(NULL, delim);
 
 	}
@@ -72,37 +70,10 @@ void decompressionne(){
 	detruire(&tree);
 	free(res);
 	free(TreeSt);
-
-	//decompression_Fichier("compression.txt", tree);
 }
 
 
 int main(int argc, char *argv[]){
-	
-	/*
-	clock_t begin = clock();
-	FONCTION A TIMER ICI
-	clock_t end = clock();
-
-	double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
-	printf("----------\nExe : %f\n----------\n", time_spent);*/
-
-
-
-	/*nd tree = compression_Fichier("tests.txt");
-	puts("Compression faite, tree dispo");
-
-	char *decomp = decompression_Fichier("compression.txt", tree);
-
-	printf("décompressé = %s\n", decomp);
-
-	detruire(&tree);
-
-	free(decomp);*/
-
-
-
-
 	int choix; // Int representant le choix de l'utilisateur
 	int choisir = 0; // Boolean pour sortir de la boucle
 	int c;
@@ -125,7 +96,6 @@ int main(int argc, char *argv[]){
 				break;
 
 			case 1:
-				//cleanBUFFER();
 				compressionne();
 				break;
 			case 2:
@@ -141,6 +111,5 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	//detruire(&tree);
 	return EXIT_SUCCESS;
 }

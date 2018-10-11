@@ -260,3 +260,27 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 
 	}
 }
+
+void CreateTreeFromString(nd * racine, char *prefixed){
+	printf("%s\n", prefixed);
+	if(prefixed[0] == ':'){
+		(*racine) = creer_noeud(prefixed[1], 0);
+	}
+	else{
+		if((*racine) == NULL){
+			(*racine) = creer_noeud(NULL, 0);
+			
+		}
+	//afficher((*racine));
+		if(prefixed[0] == '0') {
+			puts("gauche");
+			prefixed++;
+			CreateTreeFromString(&((**racine).gauche), prefixed);
+		}
+		else {
+			puts("autre gauche");
+			prefixed++;
+			CreateTreeFromString(&((**racine).droite), prefixed); 
+		}
+	}
+}

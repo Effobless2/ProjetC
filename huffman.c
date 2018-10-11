@@ -213,8 +213,9 @@ char* decompression(nd src, char *str){
 	char *rt = malloc(sizeof(char));
 	nd temp = src;
 	rt[0] = '\0';
-
+	printf("%s\n", str);
 	while( i < strlen(str) ){
+		puts("decomp");
 		//printf("décomp cur bit : %c\n", str[i]);
 		if( (*temp).val != NULL ){
 			rt = realloc( rt, sizeof(char) * (strlen(rt)) + 2);

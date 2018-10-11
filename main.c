@@ -10,7 +10,7 @@ void cleanBUFFER(){
 
 void compressionne(){
 	puts("Compression d'un fichier");
-	printf("Entrer le nom de votre fichier suivi du nom du fichier compressé:\n>>");
+	printf("Entrer le nom de votre fichier suivi du nouveau nom du fichier compressé:\n>>");
 	char curName[100];
 	char newName[100];
 	scanf("%s %s", curName, newName);
@@ -24,6 +24,8 @@ void compressionne(){
 }
 
 void decompressionne(){
+	puts("Compression d'un fichier");
+	printf("Entrer le nom de votre fichier à dédcompresser suivi du nouveau nom du fichier décompressé:\n>>");
 	/*
 	puts("Decompression d'un fichier");
 	printf("Entrer le nom de votre fichier :\n>>");
@@ -31,8 +33,50 @@ void decompressionne(){
 	scanf("%s", nom);
 	cleanBUFFER();
 	*/
+	char curName[100];
+	char newName[100];
+	scanf("%s %s", curName, newName);
 
-	decompression_Fichier("compression.txt", tree);
+	char *TreePath = malloc(sizeof(char) * (3 + strlen(curName) + strlen("/tree.txt")));
+	TreePath[0] = '.';
+	TreePath[1] = '/';
+	TreePath[2] = '\0';
+	strcat(TreePath, curName);
+	strcat(TreePath, "/tree.txt");
+	char *TreeSt = readFile(TreePath);
+	free(TreePath);
+
+	nd tree = NULL;
+	char* token;
+	char *delim ="\n";
+
+	token = strtok(TreeSt, delim);
+	while(token != NULL){
+		CreateTreeFromString(&tree, token);
+		//printf("%s\n", token);
+		token = strtok(NULL, delim);
+
+	}
+
+	char *CompPath = malloc(sizeof(char) * (3 + strlen(curName) + strlen("/compression.txt")));
+	CompPath[0] = '.';
+	CompPath[1] = '/';
+	CompPath[2] = '\0';
+	strcat(CompPath, curName);
+	strcat(CompPath, "/compression.txt");
+
+puts("affichage");
+	afficher(tree);
+	char *res = decompression_Fichier(CompPath,tree);
+
+	printf("%s\n", res);
+	
+	free(CompPath);
+	detruire(&tree);
+	free(res);
+	free(TreeSt);
+
+	//decompression_Fichier("compression.txt", tree);
 }
 
 

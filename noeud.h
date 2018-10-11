@@ -17,3 +17,5 @@ void detruire(nd* src);
 void afficher(nd n);
 int nodeComparision(nd, nd);
 nd fusion(nd, nd);
+char *GetSavedStringForTree(nd tree, char *prefixe);
+void CreateTreeFromString(nd * racine, char *prefixed);

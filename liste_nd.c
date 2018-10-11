@@ -4,11 +4,17 @@
 //IDOUX Etienne
 //--------------------------------------------------------------------
 
+
+
 #include "liste_nd.h"
 
-/*
-    Crée et retourne une liste chainée contenant comme valeur le noeud node
-*/
+
+
+//--------------------------------------------------------
+//Paramètres : Pointeur de noeud nd
+//Retourne : Pointeur de liste lt
+//Utilité : Permet de créer une liste à partir d'un noeud.
+//--------------------------------------------------------
 lt create(nd node){
     lt res = malloc(sizeof(struct ltest));
     res->val = node;
@@ -17,10 +23,15 @@ lt create(nd node){
     return res;
 }
 
-/*
-    Ajoute une nouvelle liste chainée ayant un noeud possédant comme valeur val
-    à la fin de la liste chaînée list
-*/
+
+
+//-------------------------------------------------------------
+//Paramètres : 
+//      Pointeur de liste
+//      Caractère à ajouter à la liste
+//Retourne : void
+//Utilité : Ajoute le caractère à la liste donnée en paramètre.
+//-------------------------------------------------------------
 void addToList(lt list, char val){
     if (list->val->val == val){
         list->val->occ++;
@@ -37,10 +48,14 @@ void addToList(lt list, char val){
 }
 
 
-/*
-    Supprime la liste chainée ayant pour valeur le paramètre node
-    à la liste lt et resoude cette dernière
-*/
+
+//---------------------------------------------------------------------------
+//Paramètres : 
+//      Pointeur de pointeur de liste
+//      Pointeur de noeud
+//Retourne : void
+//Utilité : Supprime le noeud de la liste des paramètres et resoude celle-ci.
+//---------------------------------------------------------------------------
 void suppressNode(lt *list, nd node){
     if ((*list)->val == node){
         lt temp = (*list);
@@ -56,6 +71,11 @@ void suppressNode(lt *list, nd node){
 /*
     Détruit la liste chaînée lt et le reste de sa chaîne
 */
+//------------------------------------------------------
+//Paramètres : Pointeur de liste
+//Retourne : void
+//Utilité : Supprime la liste ainsi que tout ses noeuds.
+//------------------------------------------------------
 void destroyList(lt list){
     if (list->next != NULL){
         destroyList(list->next);
@@ -63,9 +83,13 @@ void destroyList(lt list){
     free(list);
 }
 
-/*
-    affiche la liste chaînée list
-*/
+
+
+//---------------------------------------------------
+//Paramètres : Pointeur de liste
+//Retourne : void
+//Utilité : Permet d'afficher la liste et ses noeuds.
+//---------------------------------------------------
 void afficherList(lt list){
     printf("Valeur : %c, Occurence : %d\n", list->val->val, list->val->occ);
     if (list->next != NULL){

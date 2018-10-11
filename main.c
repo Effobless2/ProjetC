@@ -36,6 +36,7 @@ void decompressionne(){
 	char curName[100];
 	char newName[100];
 	scanf("%s %s", curName, newName);
+	strcat(newName, ".txt");
 
 	char *TreePath = malloc(sizeof(char) * (3 + strlen(curName) + strlen("/tree.txt")));
 	TreePath[0] = '.';

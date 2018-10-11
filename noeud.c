@@ -4,11 +4,17 @@
 //IDOUX Etienne
 //--------------------------------------------------------------------
 
+
+
 #include "noeud.h"
 
-/*
-	Affiche l'arbre mit en paramètre
-*/
+
+
+//-------------------------------------------
+//Paramètres : Arbre à afficher
+//Retourne : void
+//Utilité : Affiche l'arbre mit en paramètre.
+//-------------------------------------------
 void afficher(nd n){
 	char v = (char)(*n).val;
 	int occ = (int)(*n).occ;
@@ -22,9 +28,16 @@ void afficher(nd n){
 		afficher(n->droite);
 	}
 }
-/*
-	Crée un noeud minimal possédant les informations mises en pramètre
-*/
+
+
+
+//-----------------------------------------------------------------------------
+//Paramètres : 
+//		Caractère pour créer l'arbre
+//		Occurence du caractère
+//Retourne : Pointeur du noeud créé
+//Utilité : Crée un noeud minimal possédant les informations mises en pramètre.
+//-----------------------------------------------------------------------------
 nd creer_noeud(char val, void *occ)
 {
 	nd res = (nd)malloc(sizeof(struct noeud));
@@ -37,9 +50,16 @@ nd creer_noeud(char val, void *occ)
 	return res;
 }
 
-/*
-	Ajoute à l'arbre src un nouveau noeud possédant une valeur val et une occurence occ
-*/
+
+
+//------------------------------------------------
+//Paramètres : 
+//		Arbre de Huffman
+//		Caractère à ajouter dans l'arbre
+//		Occurence du caractère
+//Retourne : Pointeur du noeud créé
+//Utilité : Ajoute à l'arbre src un nouveau noeud.
+//------------------------------------------------
 void ajout(nd *src, char val, void *occ)
 {
 	if ((*src) != NULL)
@@ -60,18 +80,27 @@ void ajout(nd *src, char val, void *occ)
 	}
 }
 
-/*
-	Retourne le noeud max d'un arbre s'il existe
-*/
+
+
+//------------------------------------------------
+//Paramètres : Arbre de Huffman
+//Retourne : Pointeur du noeud max de l'arbre
+//Utilité : Trouve le plus grand noeud de l'arbre.
+//------------------------------------------------
 nd noeudMax(nd racine){
 	if (racine != NULL){
 		return (*racine).droite == NULL ? racine : noeudMax((*racine).droite);
 	}
 	return NULL;
 }
-/*
-	Retourne le noeud min d'un arbre s'il existe
-*/
+
+
+
+//------------------------------------------------
+//Paramètres : Arbre de Huffman
+//Retourne : Pointeur du noeud min de l'arbre
+//Utilité : Trouve le plus petit noeud de l'arbre.
+//------------------------------------------------
 nd noeudMin(nd racine){
 	if (racine != NULL){
 		return racine->gauche == NULL ? racine : noeudMin(racine->gauche);
@@ -79,9 +108,15 @@ nd noeudMin(nd racine){
 	return NULL;
 }
 
-/*
-	Retourne le noeud parent d'un noeud possédant la valeur val dans le noeud src (si ce dernier s'y trouve) 
-*/
+
+
+//------------------------------------------------------------------
+//Paramètres : 
+//		Arbre de Huffman
+//		Caractère dont on veut connaître le parent
+//Retourne : Pointeur du noeud parent du caractère en paramètre.
+//Utilité : Trouve le parent du caractère en paramètre dans l'arbre.
+//------------------------------------------------------------------
 nd getParent(nd src, char val){
 	nd curP = src;
 	nd curChild = curP;
@@ -119,10 +154,15 @@ nd getParent(nd src, char val){
 }
 
 
-/*
-	Supprime le noeud possédant la valeur val dans src et remplace ce premier 
-	dans src par un de ses enfants afin de maintenir la cohhésion générale de l'arbre
-*/
+
+//--------------------------------------------------------------------------------------------
+//Paramètres : 
+//		Arbre de Huffman
+//		Caractère qu'on veut supprimer
+//Retourne : void
+//Utilité : Supprime le noeud contenant le caractère en paramètre
+//			Remplace ce primer dans src par un de ses enfants afin de garder l'arbre en ordre.
+//--------------------------------------------------------------------------------------------
 void supprimer(nd src, char val)
 {
 	nd *recherche = rechercher(&src, val);
@@ -171,9 +211,15 @@ void supprimer(nd src, char val)
 	}
 }
 
-/*
-	retourne l'adresse du pointeur du noeud ayant la valeur val dans racine
-*/
+
+
+//----------------------------------------------------------------------------------
+//Paramètres : 
+//		Pointeur de pointeur de l'arbre de Huffman
+//		Caractère qu'on recherche
+//Retourne : Noeud possédant le caractère recherché
+//Utilité : retourne l'adresse du pointeur du noeud ayant la valeur val dans racine.
+//----------------------------------------------------------------------------------
 nd *rechercher(nd *racine, char val)
 {
 	if ((*racine) == NULL)
@@ -191,9 +237,13 @@ nd *rechercher(nd *racine, char val)
 	return (*racine)->gauche == NULL ? NULL : rechercher(&(*racine)->gauche, val);
 }
 
-/*
-	Détruit l'arbre 'rac et ses enfants
-*/
+
+
+//-------------------------------------------------------
+//Paramètres : Pointeur de pointeur de l'arbre de Huffman
+//Retourne : void
+//Utilité : Détruit l'arbre et ses enfants.
+//-------------------------------------------------------
 void detruire(nd *rac)
 {
 	if ((*rac) != NULL)
@@ -206,9 +256,15 @@ void detruire(nd *rac)
 	}
 }
 
-/*
-	Permettait de fusionner les deux noeuds mis en paramètre mais n'est pas utilisée
-*/
+
+
+//-------------------------------------------------------------------------------------------
+//Paramètres : 
+//		Premier noeud
+//		Deuxième noeud
+//Retourne : Noeud de la fusion des deux noeuds
+//Utilité : Permettait de fusionner les deux noeuds mis en paramètre mais n'est pas utilisée.
+//-------------------------------------------------------------------------------------------
 nd fusion(nd n1, nd n2){
 	nd res = creer_noeud(NULL, (int)n1->occ + (int)n2->occ);
 	if (n1->occ > n2->occ){
@@ -223,10 +279,16 @@ nd fusion(nd n1, nd n2){
 	return res;
 }
 
-/*
-	Compare deux noeuds selon leur occurence et selon leur valeurs.
-	Si leur occurence est égale et leur valeur NULL, nous les comparons en fonction de leurs enfants
-*/
+
+
+//-----------------------------------------------------------------------------------------------------------
+//Paramètres : 
+//		Premier noeud
+//		Deuxième noeud
+//Retourne : Entier disant si les noeuds sont identiques ou non
+//Utilité : Compare deux noeuds selon leur occurence et selon leur valeurs.
+//			Si leur occurence est égale et leur valeur NULL, nous les comparons en fonction de leurs enfants.
+//-----------------------------------------------------------------------------------------------------------
 int nodeComparision(nd n1, nd n2){
 	if (n1->occ > n2->occ)
 		return 1;
@@ -244,10 +306,16 @@ int nodeComparision(nd n1, nd n2){
 }
 
 
-/*
-	Permet de créer une chaine de caractère représentative de l'arbre tree
-	prefixe est le prefixe créer avant les appels récursifs
-*/
+
+//---------------------------------------------------------------------------------
+//Paramètres : 
+//		L'arbre de Huffman
+//		Chaîne de caractère des préfixes
+//Retourne : void
+//Utilité : Permet de créer une chaine de caractère représentative de l'arbre tree.
+//			prefixe est le prefixe créer avant les appels récursifs
+//---------------------------------------------------------------------------------
+
 char *GetSavedStringForTree(nd tree, char *prefixe){
 	if (tree->val != NULL){
 		char * res = malloc(sizeof(char) * (strlen(prefixe) + 5));
@@ -295,9 +363,15 @@ char *GetSavedStringForTree(nd tree, char *prefixe){
 	}
 }
 
-/*
-	Permet de recréer l'arbre tree à partir d'un préfixe prefixe
-*/
+
+
+//---------------------------------------------------------------------------------
+//Paramètres : 
+//		L'arbre de Huffman
+//		Chaîne de caractère des préfixes
+//Retourne : void
+//Utilité : Permet de recréer l'arbre tree à partir d'un préfixe prefixe
+//---------------------------------------------------------------------------------
 void CreateTreeFromString(nd * racine, char *prefixed){
 	if(prefixed[0] == ':'){
 		(*racine) = creer_noeud(prefixed[1], 0);

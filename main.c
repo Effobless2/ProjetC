@@ -17,6 +17,11 @@ void compressionne(){
 	cleanBUFFER();
 
 	tree = compression_Fichier(curName, newName);
+	if(tree == NULL){
+		fprintf(stderr, "[Erreur] Le fichier que vous essayez de compresser n'existe pas\n");
+		return EXIT_FAILURE;
+	}
+
 	detruire(&tree);
 
 }
@@ -36,6 +41,10 @@ void decompressionne(){
 	strcat(TreePath, curName);
 	strcat(TreePath, "/tree.txt");
 	char *TreeSt = readFile(TreePath);
+	if(TreeSt == NULL){
+		fprintf(stderr, "[Erreur] Le fichier que vous essayez de décompresser n'existe pas\n");
+		return NULL;
+	}
 	free(TreePath);
 
 	nd tree = NULL;

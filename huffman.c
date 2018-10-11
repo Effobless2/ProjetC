@@ -55,6 +55,9 @@ nd stringEncoding(char *text){
 nd compression_Fichier(char *name, char *newName){
 	// On lit le fichier et on store les char dans un tableau et on en profite pour compter le nb de symbole
 	char *texte = readFile(name);
+	if(texte == NULL){
+		return NULL;
+	}
 	puts("*****Read file");
 
 	/* ---------- Compression du texte ---------- */

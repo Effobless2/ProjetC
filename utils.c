@@ -6,6 +6,9 @@ char *readFile(char *name){
 	char* texte;
 
 	fp = fopen(name, "r");
+	if(fp == NULL){
+		return NULL;
+	}
 	// On récupère la taille en allant à la fin du fichier 
 	fseek(fp, 0, SEEK_END); // on va a la fin du fichier
 	taille = ftell(fp); // cb de bits on a parcouru

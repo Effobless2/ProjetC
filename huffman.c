@@ -81,13 +81,10 @@ nd compression_Fichier(char *name, char *newName){
 	if(texte == NULL){
 		return NULL;
 	}
-	puts("*****Read file");
 
 	/* ---------- Compression du texte ---------- */
 	nd arbreCompression = stringEncoding(texte);
-	puts("*****Arbre done");
 	char* compr = compression(arbreCompression, texte);
-	puts("*****Compression faite");
 
 	free(texte);
 
@@ -120,7 +117,7 @@ nd compression_Fichier(char *name, char *newName){
 	FILE *fT = fopen(nameOfTree, "w");
 	fwrite(StringTree, sizeof(char), strlen(StringTree), fT);
 	fclose(fT);
-	puts("*****Ajout dans le fichier fait");
+	puts("*****Ajout dans le fichier fait*****");
 
 	free(nameOfCompil);
 
@@ -160,7 +157,7 @@ char* decompression_Fichier(char *name, nd arbre, char *newName){
 	fwrite(res, sizeof(char), strlen(res), fp);
 	fclose(fp);
 
-	puts("***** Fichier créer");
+	puts("***** Fichier créer *****");
 
 	return res;
 }

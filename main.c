@@ -1,13 +1,21 @@
 #include "huffman.h"
 #include <time.h>
 
-nd tree;
 
+/*
+Nettoie le buffer
+*/
 void cleanBUFFER(){
 	int c;
 	while(((c = getchar()) != '\n') && (c != EOF));
 }
 
+
+/*
+	Fonction appelée quand l'utilisateur souhaite compresser un fichier
+	Demande le nom du fichier à compresser et le nom de l'archive à créer
+	et crée l'archive.
+*/
 void compressionne(){
 	puts("Compression d'un fichier");
 	printf("Entrer le nom de votre fichier suivi du nouveau nom du fichier compressé:\n>>");
@@ -16,7 +24,7 @@ void compressionne(){
 	scanf("%s %s", curName, newName);
 	cleanBUFFER();
 
-	tree = compression_Fichier(curName, newName);
+	nd tree = compression_Fichier(curName, newName);
 	if(tree == NULL){
 		fprintf(stderr, "[Erreur] Le fichier que vous essayez de compresser n'existe pas\n");
 		return EXIT_FAILURE;
@@ -26,6 +34,11 @@ void compressionne(){
 
 }
 
+/*
+	Fonction appelée quand l'utilisateur souhaite décompresser un fichier
+	Demande le nom de l'archive à décompresser et le nom du fichier à créer
+	et crée ce dernier.
+*/
 void decompressionne(){
 	puts("Compression d'un fichier");
 	printf("Entrer le nom de votre fichier à dédcompresser suivi du nouveau nom du fichier décompressé:\n>>");
